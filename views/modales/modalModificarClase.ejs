@@ -1,0 +1,57 @@
+<div class="modal fade" id="modalModificarClase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Modificar Clase</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="ui form large" method="POST" id="formModificarClase" autocomplete="off">
+                <div class="modal-body text-left m-2">
+                    <div class="field required">
+                        <label>Responsable:</label>
+                        <input type="text" name="responsable" id="responsable" placeholder="Nombre del responsable">
+                    </div>
+                    <div class="field required">
+                        <label>Salon:</label>
+                        <select class="ui search dropdown" name="salonUpdate" id="salonUpdate">
+                            <option value="">Seleccioné</option>
+                            <% for( let index = 0; index < data.salones.length; index++ ) { %>
+                                <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Hora Inicial:</label>
+                                <select class="ui search dropdown" name="inicial" id="inicial">
+                                    <option value="">Seleccioné</option>
+                                    <% for( let index = 0; index < data.horas.length; index++ ) { %>
+                                        <option value='<%= data.horas[index].codigo %>'><%= data.horas[index].hora %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Hora Final:</label>
+                                <select class="ui search dropdown" name="final" id="final">
+                                    <option value="">Seleccioné</option>
+                                    <% for( let index = 0; index < data.horas.length; index++ ) { %>
+                                        <option value='<%= data.horas[index].codigo %>'><%= data.horas[index].hora %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-elegant" data-dismiss="modal">Cerrar</button>
+                    <button id="btModificar" data-id="0" type="submit" class="btn orange">Modificar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

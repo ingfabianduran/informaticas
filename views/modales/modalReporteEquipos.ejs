@@ -1,0 +1,29 @@
+<div class="modal fade" id="modalReporte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Generar Reporte</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="ui form m-2 large" method="POST" action="/reportInventario" id="formReporteEquipos" autocomplete="off">
+                <div class="modal-body">
+                    <div class="field required">
+                        <label>Salón o General:</label>
+                        <select class="ui search dropdown" name="reportSalon" id="reportSalon">
+                            <option value="">Seleccioné</option>
+                            <option value="0">General</option>
+                            <% for(let index = 0; index < data.salones.length; index++) { %>
+                                <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn orange text-white"><i class="fas fa-download"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

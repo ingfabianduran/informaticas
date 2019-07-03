@@ -1,0 +1,342 @@
+// Event load page: 
+$(document).ready(function () 
+{
+    ajaxGraph();
+
+    validateFormReporte();
+    validateFormEquipos();
+    validateFormConEquipo();
+    validateFormEquipos("newEquipo", null);
+    
+    // CSS Semantic UI: 
+    $(".ui.dropdown").dropdown();
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // Event click btn info equipos: 
+    $(".table-equipos").on("click", ".btn.btn-elegant.btn-sm", function (e)
+    {
+        $("#titleModalEquipo").text("Modificar Equipo");
+        $("#btnSetEquipo").text("Modificar");
+
+        const codEquipo = $(this).data("id");
+        e.preventDefault();
+
+        $.ajax({
+            type: "GET",
+            url: "/moreInfoEquipo/" + codEquipo,
+            beforeSend: function() 
+            {
+                $("#setInfoEquipos").addClass("loading");
+            },
+            success: function (response) 
+            {
+                if (response.data.status)
+                {
+                    $("#inventario").val(response.data.equipo[0].inventario);
+                    $("#serial").val(response.data.equipo[0].serie);
+                    $("#marca").val(response.data.equipo[0].marca);
+                    $("#tipoEquipo").val(response.data.equipo[0].tipo).change();
+                    $("#estado").val(response.data.equipo[0].estado).change();
+                    $("#salon").val(response.data.equipo[0].codSalon).change();
+                    $("#nombre").val(response.data.equipo[0].nomEquipo);
+                    $("#observaciones").val(response.data.equipo[0].observaciones); 
+
+                    validateFormEquipos("updateEquipo", codEquipo);
+                }
+                else
+                {
+                    viewAlertError(response.data.message);
+                }
+            },
+            complete: function()
+            {
+                setInterval(function(){
+                    $("#setInfoEquipos").removeClass("loading");
+                }, 2000);
+            }
+        });
+    });
+    // Event click btn add salon:
+    $(".table-add").on("click", ".btn.btn-elegant", function (e)
+    {
+        $("#titleModalEquipo").text("Nuevo Equipo");
+        $("#btnSetEquipo").text("Registrar");
+
+        $('#setInfoEquipos').trigger("reset");
+        $(".ui.dropdown").dropdown("clear");
+    });
+
+    setInterval(function() {
+        $("#divEquipos").removeClass("active");
+    }, 2000);
+});
+// AJAX with get datasets and labels:
+function ajaxGraph()
+{
+    $.ajax({
+        type: "GET",
+        url: "/reportEquipos",
+        success: function (response) 
+        {
+            if(response.data.status)
+            {
+                drawChart(response.data.infoEstado, "graficaEquipos", "doughnut");
+                drawChart(response.data.infoTipo, "graficaEquipos2", "pie");
+            }
+        }
+    });
+}
+// Draw report get send data AJAX: 
+function drawChart(data, canvas, type)
+{
+    const ctx = document.getElementById(canvas).getContext("2d");
+    const dinamicInfo = getDinamicInfo(data);
+    const myPieChart = new Chart(ctx, 
+    {
+        options: {
+            plugins: {
+                datalabels: {
+                    color: "#ffffff",
+                    backgroundColor: "#c5e1a5",
+                    borderColor: "#ffffff",
+                    opacity: 0.9,
+                    borderWidth: 2,
+                    borderRadius: 5,
+                    font: {
+                        family: "Arial",
+                        size: "13",
+                        weight: "bold"
+                    },
+                    padding: 5,
+                }
+            }
+        },
+        type: type,
+        data: {
+            datasets: [ {data: dinamicInfo.datasets, backgroundColor: dinamicInfo.backgroundColor,} ],
+            labels: dinamicInfo.labels,
+        },
+    });
+}
+// Get JSON array with data in database: 
+function getDinamicInfo(data)
+{
+    var dinamicInfo = {
+        datasets: [],
+        labels: [],
+        backgroundColor: ["rgb(255,152,0, 0.8)", "rgb(156,204,101, 0.8)", "rgb(46,46,46, 0.8)", "#rgb(141,110,99, 0.8)"],
+    };
+
+    for (let index = 0; index < data.length; index++) 
+    {
+           dinamicInfo.datasets.push(data[index].total);
+           dinamicInfo.labels.push(data[index].label);
+    }
+
+    return dinamicInfo;
+}
+// AJAX new and update info equipos:
+function setInfoEquipos(url, data)
+{
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        beforeSend: function() 
+        {
+            $("#setInfoEquipos").addClass("loading");
+        },
+        success: function (response) 
+        {
+            if (response.data.status)
+            {
+                viewAlertSuccess(response.data.message);
+            }
+            else
+            {
+                viewAlertError(response.data.message);
+            }
+        },
+        complete: function()
+        {
+            $("#setInfoEquipos").removeClass("loading");
+        }
+    });
+}
+// Validate form new equipo:
+function validateFormEquipos(typeTrans, codEquipo)
+{
+    $("#setInfoEquipos").form({
+        fields: {
+            inventario: {
+                identifier: "inventario",
+                rules: [
+                    {type: "empty", prompt: "Digite el nombre del responsable"},
+                    {type: "maxLength[15]", prompt: "Maximo 15 caracteres"},
+                ]
+            },
+            serial: {
+                identifier: "serial",
+                rules: [
+                    {type: "empty", prompt: "Digite el serial del equipo"},
+                    {type: "maxLength[30]", prompt: "Maximo 30 caracteres"},
+                ]
+            },
+            marca: {
+                identifier: "marca",
+                rules: [
+                    {type: "empty", prompt: "Digite la marca del equipos"},
+                    {type: "maxLength[45]", prompt: "Maximo 45 caracteres"},
+                ]
+            },
+            tipoEquipo: {
+                identifier: "tipoEquipo",
+                rules: [
+                    {type: "empty", prompt: "Seleccioné un tipo de equipo"},
+                ]
+            },
+            nombre: {
+                identifier: "nombre",
+                rules: [
+                    {type: "empty", prompt: "Digite el nombre del equipo"},
+                    {type: "maxLength[30]", prompt: "Maximo 30 caracteres"},
+                ]
+            },
+            estado: {
+                identifier: "estado",
+                rules: [
+                    {type: "empty", prompt: "Seleccioné el estado del equipo"},
+                ]
+            },
+            salon: {
+                identifier: "salon",
+                rules: [
+                    {type: "empty", prompt: "Seleccioné la ubicación del equipo"},
+                ]
+            },
+            observaciones: {
+                identifier: "observaciones",
+                rules: [
+                    {type: "maxLength[100]", prompt: "Maximo 100 caracteres"},
+                ]
+            },
+        },
+        inline: true, 
+        on: 'blur',
+        onSuccess: function(event)
+        {
+            event.preventDefault();
+
+            if (typeTrans == "newEquipo")
+            {
+                const data = {
+                    inventario: $("#inventario").val(),
+                    serie: $("#serial").val(),
+                    marca: $("#marca").val(),
+                    tipo: $("#tipoEquipo").val(),
+                    estado: $("#estado").val(),
+                    salonUbicado: $("#salon").val(),
+                    nombre: $("#nombre").val(),
+                    observaciones: $("#observaciones").val(), 
+                };
+
+                setInfoEquipos("/newEquipo", data);
+            }
+
+            if (typeTrans == "updateEquipo")
+            {
+                const data = {
+                    codigo: codEquipo,
+                    inventario: $("#inventario").val(),
+                    serie: $("#serial").val(),
+                    marca: $("#marca").val(),
+                    tipo: $("#tipoEquipo").val(),
+                    estado: $("#estado").val(),
+                    salonUbicado: $("#salon").val(),
+                    nombre: $("#nombre").val(),
+                    observaciones: $("#observaciones").val(), 
+                };
+
+                setInfoEquipos("/updateEquipo", data);
+            }
+        }
+    });
+}
+// Validate form reporte equipos: 
+function validateFormReporte()
+{
+    $("#formReporteEquipos").form({
+        fields: {
+            reportSalon: {
+                identifier: "reportSalon",
+                rules: [
+                    {type: "empty", prompt: "Por seleccioné un elemento"}
+                ]
+            },
+        },
+        inline: true, 
+        on: 'blur',
+        onSuccess: function(event)
+        {
+            // Download excel
+        }
+    });
+}
+// Validate form buscar equipo: 
+function validateFormConEquipo()
+{
+    $("#formBuscarEquipos").form({
+        fields: {
+            typeCon: {
+                identifier: "typeCon",
+                rules: [
+                    {type: "checked", prompt: "Seleccioné un tipo de consulta"}
+                ]
+            },
+        },
+        inline: true, 
+        on: 'blur',
+        onSuccess: function(event)
+        {
+            
+        }
+    });   
+}
+// Render alert with template HTML: 
+function viewAlertSuccess(templated)
+{        
+    Swal.fire({
+        title: '<h1 class="font-weight-bold">OK!!!!</h1>',
+        type: 'success',
+        html: templated,
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Entendido!!!',
+        confirmButtonColor: '#ff4444',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+        animation: false,
+        customClass: {
+            popup: 'animated tada'
+        }
+    }).then(function() {
+        location.href = "/equipos/0";
+    });
+}
+// Render alert error with message: 
+function viewAlertError(message)
+{
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 7000
+    });
+    
+    Toast.fire({
+        type: 'error',
+        title: message,
+    });
+}

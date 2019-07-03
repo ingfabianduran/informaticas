@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <%- include("head.ejs") %>
+    </head>
+    <body class="light-green lighten-1">
+        <script src="js/formularios/formSesion.js"></script>
+        <script src="/js/componentes/ajaxError.js"></script>
+        <div class="container-fluid mt-5 animated fadeInUp">
+            <div class="row justify-content-center h-100">
+                <div class="col-md-4 col-lg-4 col-xl-4 mt-5 my-auto alert-dismissible fade show">
+                    <% if (message.length > 0) { %>
+                        <div class="alert alert-danger" role="alert">
+                            <%= message %>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                    <div class="card z-depth-4 rounded">
+                        <div class="orange">
+                            <h2 class="card-header white-text font-weight-bold text-uppercase text-center py-4">sign in</h2>
+                        </div>
+                        <div class="card-body m-3">
+                            <form class="ui form large" autocomplete="off" id="formSesion">
+                                <div class="field required">
+                                    <label>Usuario:</label>
+                                    <input type="text" name="usuario" id="usuario" placeholder="Nombre de usuario">
+                                </div>
+                                <div class="field required">
+                                    <label>Contraseña:</label>
+                                    <input type="password" name="password" id="password" placeholder="Contraseña de usuario">
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-outline-orange btn-block waves-effect">INGRESAR</button>
+                                    <button type="reset" class="btn btn-outline-elegant btn-block waves-effect mt-4">CANCELAR</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include("footer.ejs") %>
+    </body>
+</html>

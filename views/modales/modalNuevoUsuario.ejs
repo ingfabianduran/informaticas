@@ -1,0 +1,69 @@
+<div class="modal fade" id="modalNuevoUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 id="titleModalUsuario" class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Nuevo Usuario</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="setInfoUser" class="ui form large" autocomplete="off">
+                <div class="modal-body m-2">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="field required">
+                                <label>Usuario:</label>
+                                <input type="text" name="usuario" id="usuario" placeholder="Nombre de usuario">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="field required">
+                                <label>Contraseña:</label>
+                                <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña del usuario">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="field required">
+                                <label>Confirmar:</label>
+                                <input type="password" name="confirmar" id="confirmar" placeholder="Contraseña del usuario">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Nombre:</label>
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre completo del usuario">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Tipo:</label>
+                                <select class="ui search dropdown" id="perfil" name="perfil">
+                                    <option value="">Seleccioné</option>
+                                    <% for( let index = 0; index < data.privilegios.data.length; index++ ) { %>
+                                        <option value='<%= data.privilegios.data[index].value %>'><%= data.privilegios.data[index].text %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="inline field mt-2">
+                                <div class="ui checkbox">
+                                    <input type="checkbox" name="estado" id="estado">
+                                    <label class="font-weight-bold">El usuario esta bloqueado</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-elegant" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn orange" id="btnModalUsuario">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

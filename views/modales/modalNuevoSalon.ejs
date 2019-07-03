@@ -1,0 +1,53 @@
+<div class="modal fade" id="modalNuevoSalon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 id="titleModalSalon" class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Nuevo Salón</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="setInfoSalon" class="ui form large" autocomplete="off">
+                <div class="modal-body m-2">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="field required">
+                                <label>Nombre:</label>
+                                <input type="text" name="salon" id="salon" placeholder="Nombre del salon">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="field required">
+                                <label>Cargadores:</label>
+                                <input type="number" name="cargadores" id="cargadores" placeholder="#">
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="field required">
+                                <label>Tipo:</label>
+                                <select class="ui search dropdown" name="tipo" id="tipo">
+                                    <option value="">Seleccioné</option>
+                                    <% for( let index = 0; index < data.tiposAula.data.length; index++ ) { %>
+                                        <option value='<%= data.tiposAula.data[index].value %>'><%= data.tiposAula.data[index].text %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="field">
+                                <label>¿Alguna observación?</label>
+                                <textarea rows="3" id="observaciones" name="observaciones"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-elegant" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSetSalon" type="submit" class="btn btn orange">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

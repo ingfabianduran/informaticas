@@ -1,0 +1,39 @@
+<div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Buscar Equipo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="ui form large" id="formBuscarEquipos" method="POST" action="/searchEquipos" autocomplete="off">
+                <div class="modal-body m-2">
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" id="typeCon" name="typeCon" value="serial">
+                            <label>Serial o Inventario:</label>
+                        </div>
+                        <input type="text" placeholder="Serial o Inv..." id="conSerial" name="conSerial">
+                    </div>
+                    <div class="ui horizontal divider"> Or </div>
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" id="typeCon" name="typeCon" value="salon">
+                            <label>Salón:</label>
+                        </div>
+                        <select class="ui search dropdown" name="conSalon" id="conSalon">
+                            <option value="">Seleccioné</option>
+                            <% for(let index = 0; index < data.salones.length; index++) { %>
+                                <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn orange text-white"><i class="fas fa-search mr-1"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<div class="modal fade" id="modalNuevoEquipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 id="titleModalEquipo" class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Nuevo Equipo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="setInfoEquipos" class="ui form m-2 large" autocomplete="off">
+                <div class="modal-body">
+                    <h3 class="ui dividing header text-uppercase font-weight-bold">Información del Equipo</h3>
+                    <div class="row mb-1">
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>N° de Inventario:</label>
+                                <input type="text" name="inventario" id="inventario" placeholder="Inventario del equipo">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Serial:</label>
+                                <input type="text" name="serial" id="serial" placeholder="Serial del equipo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Marca:</label>
+                                <input type="text" name="marca" id="marca" placeholder="Marca del equipo">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Tipo</label>
+                                <select class="ui search dropdown" name="tipoEquipo" id="tipoEquipo">
+                                    <option value="">Seleccioné</option>
+                                    <% for(let index = 0; index < data.dataForm.tipo.length; index++) { %>
+                                        <option value='<%= data.dataForm.tipo[index] %>'><%= data.dataForm.tipo[index] %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="ui dividing header text-uppercase font-weight-bold">Información Adicional</h3> 
+                    <div class="row">                       
+                        <div class="col-4">
+                            <div class="field required">
+                                <label>Nombre de red:</label>
+                                <input type="text" name="nombre" id="nombre" placeholder="Nombre de red">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="field required">
+                                <label>Estado:</label>
+                                <select class="ui search dropdown" name="estado" id="estado">
+                                    <option value="">Seleccioné</option>
+                                    <% for(let index = 0; index < data.dataForm.estado.length; index++) { %>
+                                        <option value='<%= data.dataForm.estado[index] %>'><%= data.dataForm.estado[index] %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="field required">
+                                <label>Salón ubicado:</label>
+                                <select class="ui search dropdown" name="salon" id="salon">
+                                    <option value="">Seleccioné</option>
+                                    <% for(let index = 0; index < data.salones.length; index++) { %>
+                                        <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mt-3">
+                        <label>¿Alguna Observación?</label>
+                        <textarea rows="3" name="observaciones" id="observaciones"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-elegant" data-dismiss="modal">Cerrar</button>
+                    <button id="btnSetEquipo" type="submit" class="btn btn orange">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

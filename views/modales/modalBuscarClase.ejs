@@ -1,0 +1,32 @@
+<div class="modal fade" id="modalBuscar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Buscar Clase</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="ui form large" id="formBuscarClase" autocomplete="off">
+                <div class="modal-body m-2">
+                    <div class="alert alert-info mt-2 mb-2" role="alert">
+                        <p class="text-center font-weight-bold font-italic">Solo se mostrara la clase activa en el salón seleccionado</p>
+                    </div>
+                    <div class="field required">
+                        <label>Salon:</label>
+                        <select class="ui search dropdown" name="salon" id="salon">
+                            <option value="">Seleccioné</option>
+                            <% for( let index = 0; index < data.salones.length; index++ ) { %>
+                                <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-elegant" data-dismiss="modal">Cerrar</button>
+                    <button id="myBtn" type="submit" class="btn btn orange">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
