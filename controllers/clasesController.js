@@ -85,7 +85,7 @@ module.exports = {
         }
         else
         {
-            
+            res.send({data: {status: false, message: "Ops!!! algo raro paso aca"}});
         }
     },
     // View info in alert depends class select: 

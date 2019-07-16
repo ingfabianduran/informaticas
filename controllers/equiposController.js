@@ -52,6 +52,21 @@ module.exports = {
             res.redirect("/");
         }
     },
+    // Return list equipos:
+    listEquipos: async function(req, res)
+    {
+        const data = {
+            page: parseInt(req.params.page),
+            currentPage: (parseInt(req.params.page) + 10) / 10,
+            limit: 10,
+        };
+
+        const equipos = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
+                                select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
+                                where("salonUbicado", 1).limit(data.limit).offset(data.page);
+
+        res.send({equipos: equipos});
+    },
     // Render report estado equipo and total equipos: 
     viewReportEquipos: function(req, res)
     {

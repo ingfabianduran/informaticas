@@ -7,10 +7,6 @@ $(document).ready(function ()
     validateFormConsulta();
     validateFormUpdateClase();
     $("[data-toggle='tooltip']").tooltip();
-
-    setInterval(function(){
-        $("#divClases").removeClass("active");
-    }, 2000);
 });
 // View class in the table: 
 function mostrarClases(page, element)
@@ -29,7 +25,6 @@ function mostrarClases(page, element)
             $("ul").children().removeClass("active");
             if (element != null) $(element).parent().addClass("active");
             else $('#pagination li:first-child').addClass("active"); 
-
 
             if (response.clases.length > 0)
             {
@@ -168,7 +163,9 @@ function masInformacion(element)
 // Call AJAX edit information class: 
 function editarInformacionClase(element)
 {
+    $("#formModificarClase").addClass("loading");
     const codClase = $(element).data("id");
+
     $(window).on('shown.bs.modal', function() 
     { 
         $.ajax({
@@ -176,7 +173,7 @@ function editarInformacionClase(element)
             url: "/updateClase/" + codClase,
             beforeSend: function()
             {
-                $("#formModificarClase").addClass("loading");
+                
             },
             success: function (response) 
             {

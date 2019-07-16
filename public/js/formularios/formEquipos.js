@@ -2,6 +2,7 @@
 $(document).ready(function () 
 {
     ajaxGraph();
+    listarEquipos();
 
     validateFormReporte();
     validateFormEquipos();
@@ -12,21 +13,75 @@ $(document).ready(function ()
     $(".ui.dropdown").dropdown();
     $('[data-toggle="tooltip"]').tooltip();
 
-    // Event click btn info equipos: 
-    $(".table-equipos").on("click", ".btn.btn-elegant.btn-sm", function (e)
+    // Event click btn add salon:
+    $(".table-add").on("click", ".btn.btn-elegant", function (e)
     {
-        $("#titleModalEquipo").text("Modificar Equipo");
-        $("#btnSetEquipo").text("Modificar");
+        $("#titleModalEquipo").text("Nuevo Equipo");
+        $("#btnSetEquipo").text("Registrar");
 
-        const codEquipo = $(this).data("id");
-        e.preventDefault();
+        $('#setInfoEquipos').trigger("reset");
+        $(".ui.dropdown").dropdown("clear");
+    });
+});
+// AJAX with render info equipos: 
+function listarEquipos()
+{
+    $.ajax({
+        type: "GET",
+        url: "/listEquipos/0",
+        beforeSend: function()
+        {
+
+        },
+        success: function (response) 
+        {
+            $.each(response.equipos, function (index, equipo) 
+            { 
+                $("#tabEquipos").append(rowsTableEquipo(equipo));     
+            });
+        },
+        complete: function()
+        {
+            setInterval(function(){
+                $("#divEquipos").removeClass("active");
+            }, 2000);
+        }
+    });
+}
+// Draw rows with object equipo:
+function rowsTableEquipo(equipo)
+{
+    var template = '';
+    template = '<tr>' +
+                    '<td>' + equipo.inventario + '</td>' + 
+                    '<td>' + equipo.marca + '</td>' +
+                    '<td>' + equipo.tipo + '</td>' +
+                    '<td>' + 
+                        '<span data-toggle="modal" data-target="#modalNuevoEquipo">' +
+                            '<button class="btn btn-elegant btn-sm" data-id="' + equipo.codigo + '"data-toggle="tooltip" data-placement="right" title="Mas información" onclick="moreInfoEquipo(this)"><i class="fas fa-info"></i></button>' +
+                        '</span>' +
+                    '</td>' +
+                '</tr>';
+    
+    return template;
+}
+// View modal with information equipo:
+function moreInfoEquipo(element)
+{
+    $("#setInfoEquipos").addClass("loading");
+    $("#titleModalEquipo").text("Modificar Equipo");
+    $("#btnSetEquipo").text("Modificar");
+
+    const codEquipo = $(element).data("id");
+
+    $(window).on('shown.bs.modal', function() {
 
         $.ajax({
             type: "GET",
             url: "/moreInfoEquipo/" + codEquipo,
             beforeSend: function() 
             {
-                $("#setInfoEquipos").addClass("loading");
+                
             },
             success: function (response) 
             {
@@ -56,20 +111,7 @@ $(document).ready(function ()
             }
         });
     });
-    // Event click btn add salon:
-    $(".table-add").on("click", ".btn.btn-elegant", function (e)
-    {
-        $("#titleModalEquipo").text("Nuevo Equipo");
-        $("#btnSetEquipo").text("Registrar");
-
-        $('#setInfoEquipos').trigger("reset");
-        $(".ui.dropdown").dropdown("clear");
-    });
-
-    setInterval(function() {
-        $("#divEquipos").removeClass("active");
-    }, 2000);
-});
+}
 // AJAX with get datasets and labels:
 function ajaxGraph()
 {

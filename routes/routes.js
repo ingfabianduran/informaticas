@@ -36,6 +36,7 @@ router.post("/searchEquipos", equiposController.viewEquiposEspecific);
 router.post("/newEquipo", equiposController.insertEquipo);
 router.post("/updateEquipo", equiposController.updateInfoEquipo);
 router.post("/reportInventario", equiposController.getInfoInventario);
+router.get("/listEquipos/:page", equiposController.listEquipos);
 // Salones:
 router.get("/salones", salonesController.viewDahsboard);
 router.get("/reportSalones", salonesController.viewReportSalones);
