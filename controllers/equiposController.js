@@ -44,6 +44,20 @@ module.exports = {
 
         res.send({equipos: equipos, numPage: numPage, salon: data.salon});
     },
+    // List equipo for inventario or serie:
+    listEquipo: async function(req, res)
+    {
+        const data = {
+            codEquipo: req.params.codEquipo
+        };
+
+        const equipo = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
+                                select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
+                                where("inventario", data.codEquipo).
+                                orWhere("serie", data.codEquipo);
+        
+        res.send({equipo: equipo});
+    },
     // Render report estado equipo and total equipos: 
     viewReportEquipos: function(req, res)
     {

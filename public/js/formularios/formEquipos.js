@@ -13,9 +13,7 @@ $(document).ready(function ()
     $(".ui.dropdown").dropdown();
     $('[data-toggle="tooltip"]').tooltip();
 
-    // Event click btn add salon:
-    $(".table-add").on("click", ".btn.btn-elegant", function (e)
-    {
+    $("#btNuevoEquipo").click(function() {
         $("#titleModalEquipo").text("Nuevo Equipo");
         $("#btnSetEquipo").text("Registrar");
 
@@ -45,19 +43,62 @@ function listarEquipos(page, element, isPagination, salon)
                 { 
                     $("#tabEquipos").append(rowsTableEquipo(equipo));     
                 });
+
+                if (isPagination) listPagination(response.numPage, response.salon);
             }
             else
             {
                 $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
             }
-
-            if (isPagination) listPagination(response.numPage, response.salon);
         },
         complete: function()
         {
             setInterval(function(){
                 $("#divEquipos").removeClass("active");
             }, 2000);
+
+            $("input[name='typeCon']").prop('checked', false);
+            $("#conSalon").dropdown("clear");
+            $("#conSerial").val("");
+        }
+    });
+}
+// Draw table for inventario or serie: 
+function listarEquipo(codEquipo)
+{
+    $.ajax({
+        type: "GET",
+        url: "/listEquipo/" + codEquipo,
+        beforeSend: function()
+        {
+            $("#divEquipos").addClass("active");
+        },
+        success: function (response) 
+        {
+            $("#tabEquipos tbody > tr").remove();
+            $("#pagination li").remove();
+
+            if (response.equipo.length > 0)
+            {
+                $.each(response.equipo, function (index, equipo) 
+                { 
+                    $("#tabEquipos").append(rowsTableEquipo(equipo));     
+                });
+            }
+            else
+            {
+                $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+            }
+        },
+        complete: function()
+        {
+            setInterval(function(){
+                $("#divEquipos").removeClass("active");
+            }, 2000);
+
+            $("input[name='typeCon']").prop('checked', false);
+            $("#conSalon").dropdown("clear");
+            $("#conSerial").val("");
         }
     });
 }
@@ -99,44 +140,41 @@ function moreInfoEquipo(element)
     $("#titleModalEquipo").text("Modificar Equipo");
     $("#btnSetEquipo").text("Modificar");
 
-    const codEquipo = $(element).data("id");
+    const codEquipo = $(element).data("id");    
 
-    $(window).on('shown.bs.modal', function() {
+    $.ajax({
+        type: "GET",
+        url: "/moreInfoEquipo/" + codEquipo,
+        beforeSend: function() 
+        {
+            
+        },
+        success: function (response) 
+        {
+            if (response.data.status)
+            {
+                $("#inventario").val(response.data.equipo[0].inventario);
+                $("#serial").val(response.data.equipo[0].serie);
+                $("#marca").val(response.data.equipo[0].marca);
+                $("#tipoEquipo").val(response.data.equipo[0].tipo).change();
+                $("#estado").val(response.data.equipo[0].estado).change();
+                $("#salon").val(response.data.equipo[0].codSalon).change();
+                $("#nombre").val(response.data.equipo[0].nomEquipo);
+                $("#observaciones").val(response.data.equipo[0].observaciones); 
 
-        $.ajax({
-            type: "GET",
-            url: "/moreInfoEquipo/" + codEquipo,
-            beforeSend: function() 
-            {
-                
-            },
-            success: function (response) 
-            {
-                if (response.data.status)
-                {
-                    $("#inventario").val(response.data.equipo[0].inventario);
-                    $("#serial").val(response.data.equipo[0].serie);
-                    $("#marca").val(response.data.equipo[0].marca);
-                    $("#tipoEquipo").val(response.data.equipo[0].tipo).change();
-                    $("#estado").val(response.data.equipo[0].estado).change();
-                    $("#salon").val(response.data.equipo[0].codSalon).change();
-                    $("#nombre").val(response.data.equipo[0].nomEquipo);
-                    $("#observaciones").val(response.data.equipo[0].observaciones); 
-
-                    validateFormEquipos("updateEquipo", codEquipo);
-                }
-                else
-                {
-                    viewAlertError(response.data.message);
-                }
-            },
-            complete: function()
-            {
-                setInterval(function(){
-                    $("#setInfoEquipos").removeClass("loading");
-                }, 2000);
+                validateFormEquipos("updateEquipo", codEquipo);
             }
-        });
+            else
+            {
+                viewAlertError(response.data.message);
+            }
+        },
+        complete: function()
+        {
+            setInterval(function(){
+                $("#setInfoEquipos").removeClass("loading");
+            }, 2000);
+        }
     });
 }
 // AJAX with get datasets and labels:
@@ -341,7 +379,7 @@ function validateFormReporte()
             reportSalon: {
                 identifier: "reportSalon",
                 rules: [
-                    {type: "empty", prompt: "Por seleccioné un elemento"}
+                    {type: "empty", prompt: "Por favor seleccioné un elemento"}
                 ]
             },
         },
@@ -375,6 +413,12 @@ function validateFormConEquipo()
 
                 const salon = $("#conSalon").val();
                 listarEquipos(0, null, true, salon);
+            }
+            else {
+                if($("input[name='typeCon']:checked").val() == "serial") {
+                    const codEquipo = $("#conSerial").val();
+                    listarEquipo(codEquipo);
+                }
             }
         }
     });   

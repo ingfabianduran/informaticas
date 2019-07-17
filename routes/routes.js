@@ -30,12 +30,13 @@ router.get("/finalizeClass/:codClase", clasesController.updateEstadoClase);
 router.post("/reportClases", clasesController.reportExcelClases);
 // Equipos:
 router.get("/equipos/:page", equiposController.viewEquipos);
+router.get("/listEquipos/:page/:salon", equiposController.listEquipos);
+router.get("/listEquipo/:codEquipo", equiposController.listEquipo);
 router.get("/reportEquipos", equiposController.viewReportEquipos);
 router.get("/moreInfoEquipo/:codEquipo", equiposController.viewMoreInfoEquipos);
 router.post("/newEquipo", equiposController.insertEquipo);
 router.post("/updateEquipo", equiposController.updateInfoEquipo);
 router.post("/reportInventario", equiposController.getInfoInventario);
-router.get("/listEquipos/:page/:salon", equiposController.listEquipos);
 // Salones:
 router.get("/salones", salonesController.viewDahsboard);
 router.get("/reportSalones", salonesController.viewReportSalones);
