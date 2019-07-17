@@ -2,7 +2,7 @@
 $(document).ready(function () 
 {
     ajaxGraph();
-    listarEquipos();
+    listarEquipos(0, null, true, 1);
 
     validateFormReporte();
     validateFormEquipos();
@@ -24,21 +24,34 @@ $(document).ready(function ()
     });
 });
 // AJAX with render info equipos: 
-function listarEquipos()
+function listarEquipos(page, element, isPagination, salon)
 {
     $.ajax({
         type: "GET",
-        url: "/listEquipos/0",
+        url: "/listEquipos/" + page + "/" + salon,
         beforeSend: function()
         {
-
+            $("#divEquipos").addClass("active");
         },
         success: function (response) 
         {
-            $.each(response.equipos, function (index, equipo) 
-            { 
-                $("#tabEquipos").append(rowsTableEquipo(equipo));     
-            });
+            $("#tabEquipos tbody > tr").remove();
+            $("ul").children().removeClass("active");
+            $(element).parent().addClass("active");
+
+            if (response.equipos.length > 0)
+            {
+                $.each(response.equipos, function (index, equipo) 
+                { 
+                    $("#tabEquipos").append(rowsTableEquipo(equipo));     
+                });
+            }
+            else
+            {
+                $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+            }
+
+            if (isPagination) listPagination(response.numPage, response.salon);
         },
         complete: function()
         {
@@ -64,6 +77,20 @@ function rowsTableEquipo(equipo)
                 '</tr>';
     
     return template;
+}
+// Render li in pagination:
+function listPagination(numPage, salon)
+{
+    var contador = 0;
+    $("#pagination li").remove();
+
+    for (let index = 0; index < numPage; index++) 
+    {
+        if (index == 0) $("#pagination").append('<li class="page-item active"><button class="page-link" onclick="listarEquipos(' + contador + ', this, false, ' + salon + ')">' + (index + 1) + '</button></li>');
+        else $("#pagination").append('<li class="page-item"><button class="page-link" onclick="listarEquipos(' + contador + ', this, false, ' + salon + ')">' + (index + 1) + '</button></li>');
+
+        contador += 10;
+    }
 }
 // View modal with information equipo:
 function moreInfoEquipo(element)
@@ -342,7 +369,13 @@ function validateFormConEquipo()
         on: 'blur',
         onSuccess: function(event)
         {
-            
+            event.preventDefault();
+
+            if($("input[name='typeCon']:checked").val() == "salon") {
+
+                const salon = $("#conSalon").val();
+                listarEquipos(0, null, true, salon);
+            }
         }
     });   
 }

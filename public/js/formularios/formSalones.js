@@ -100,10 +100,6 @@ $(document).ready(function ()
         $('#setInfoSalon').trigger("reset");
         $(".ui.dropdown").dropdown("clear");
     });
-
-    setInterval(function() {
-        $("#divSalones").removeClass("active");
-    }, 2000);
 });
 // Get by AJAX info graph salones:
 function ajaxGraph()
@@ -117,6 +113,12 @@ function ajaxGraph()
             {
                 drawChart("graficaSalones", response.data.report, "line");
             }
+        },
+        complete: function()
+        {
+            setInterval(function(){
+                $("#divSalones").removeClass("active");
+            }, 2000);
         }
     });
 }

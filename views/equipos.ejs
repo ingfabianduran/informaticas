@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-6 mt-5 mb-3">
                         <div class="card">
-                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de Equipos / <%= data.equipos[0].nombre %></h2>
+                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de Equipos</h2>
                             <div class="card-body">
                                 <span class="table-add float-right mb-3 mr-1">
                                     <span data-toggle="modal" data-target="#modalNuevoEquipo"><button class="btn btn-elegant" data-toggle="tooltip" data-placement="left" title="Agregar equipo"><i class="fas fa-plus"></i></button></span>
@@ -56,37 +56,14 @@
                                         <th scope="col">Acción</th>
                                     </thead>
                                     <tbody>
-                                        <!--<% for(let index = 0; index < data.equipos.length; index++) { %>
-                                            <tr>
-                                                <td><%=data.equipos[index].inventario %></td>
-                                                <td><%=data.equipos[index].marca %></td>
-                                                <td><%=data.equipos[index].tipo %></td>
-                                                <td>
-                                                    <span data-toggle="modal" data-target="#modalNuevoEquipo"><button class="btn btn-elegant btn-sm" data-id='<%= data.equipos[index].codigo %>' data-toggle="tooltip" data-placement="right" title="Mas información"><i class="fas fa-info"></i></button></span>
-                                                </td>
-                                            </tr>
-                                        <% } %>-->
+                                        
                                     </tbody>
                                 </table>
-                                <!--<% if (data.currentPage != null && data.numPage != null) { %>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination pagination-circle pg-dark justify-content-center">
-                                            <% if (data.currentPage > 1) { %>
-                                                <li class="page-item"><a class="page-link" href="/equipos/<%= (data.currentPage * 10) - 20 %>">Previous</a></li>
-                                            <% } %>
-                                            <% var contador = 0; for (let index = 0; index < data.numPage; index++) { %>
-                                                <% if (data.currentPage == (index + 1)) { %>
-                                                    <li class="page-item active"><a class="page-link" href="/equipos/<%= contador %>"><%= index + 1 %></a></li>
-                                                <% } else { %>
-                                                    <li class="page-item"><a class="page-link" href="/equipos/<%= contador %>"><%= index + 1 %></a></li>
-                                                <% } %>
-                                            <% contador += 10; } %>
-                                            <% if (data.currentPage < data.numPage) { %>
-                                                <li class="page-item"><a class="page-link" href="/equipos/<%= (data.currentPage * 10) %>">Next</a></li>
-                                            <% } %>
-                                        </ul>
-                                    </nav>
-                                <% } %>-->
+                                <nav aria-label="Page navigation example">
+                                    <ul id="pagination" class="pagination pagination-circle pg-dark justify-content-center">
+                                    
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>

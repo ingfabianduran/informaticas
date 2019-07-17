@@ -7,42 +7,15 @@ module.exports = {
     {
         if (req.session.status && req.session.nombre && req.session.nombreCompleto && req.session.privilegio)
         {
-            if (!req.session.salonConsultado) req.session.salonConsultado = 1;
-
-            const data = {
-                page: parseInt(req.params.page),
-                currentPage: (parseInt(req.params.page) + 10) / 10,
-                limit: 10,
-            };
-
             const dataForm = {
                 tipo: ["All in One", "Fijo", "Portatil", "WorkStation"].sort(),
                 estado: ["En aula", "En soporte", "En prestamo", "De baja"].sort(),
                 tipoReporte: ["Reporte general", "Reporte por salon"].sort(),
             };
 
-            knex("salon").select("codigo", "nombre").orderBy("nombre", "ACS").then(function(salones)
-            {
-                knex("equipo").count("* AS total").where("salonUbicado", req.session.salonConsultado).then(function(result)
-                {
-                    const numPage = Math.ceil(result[0].total / 10);
-
-                    knex("equipo").
-                    join("salon", "equipo.salonUbicado", "salon.codigo").
-                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
-                    where("salonUbicado", req.session.salonConsultado).limit(data.limit).offset(data.page).then(function(equipos)
-                    {
-                        res.render("equipos", {data: {equipos: equipos, salones: salones, dataForm: dataForm, numPage: numPage, currentPage: data.currentPage, usuario: req.session.nombreCompleto, privilegio: req.session.privilegio, avatar: req.session.avatar, message: req.flash("error")}});
-                    }).catch(function(err)
-                    {
-                        next();
-                    });
-                }).catch(function(err)
-                {
-                    next();
-                });
-            }).catch(function(err)
-            {
+            knex("salon").select("codigo", "nombre").orderBy("nombre", "ACS").then(function(salones){
+                res.render("equipos", {data: {salones: salones, dataForm: dataForm, usuario: req.session.nombreCompleto, privilegio: req.session.privilegio, avatar: req.session.avatar, message: req.flash("error")}}); 
+            }).catch(function(err) {
                 next();
             });
         }
@@ -59,13 +32,17 @@ module.exports = {
             page: parseInt(req.params.page),
             currentPage: (parseInt(req.params.page) + 10) / 10,
             limit: 10,
+            salon: req.params.salon
         };
-
+        
         const equipos = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
                                 select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
-                                where("salonUbicado", 1).limit(data.limit).offset(data.page);
+                                where("salonUbicado", data.salon).limit(data.limit).offset(data.page);
+        
+        const cantidadEquipos = await knex("equipo").count("* AS total").where("salonUbicado", data.salon);
+        const numPage = Math.ceil(cantidadEquipos[0].total / 10);
 
-        res.send({equipos: equipos});
+        res.send({equipos: equipos, numPage: numPage, salon: data.salon});
     },
     // Render report estado equipo and total equipos: 
     viewReportEquipos: function(req, res)
@@ -205,85 +182,6 @@ module.exports = {
             else
             {
                 res.send({data: {status: false, message: "Ops!!! algo raro paso aca"}});
-            }
-        }
-        else
-        {
-            req.flash("info", "Por favor iniciar sesión en el sistema");
-            res.redirect("/");
-        }
-    },
-    // Render view equipos especific
-    viewEquiposEspecific: async function(req, res, next)
-    {
-        if (req.session.status && req.session.nombre && req.session.nombreCompleto && req.session.privilegio)
-        {
-            const dataTypeCon = {
-                typeCon: req.body.typeCon,
-            }
-
-            var result = rule.ruleTypeCon(dataTypeCon);
-
-            if (result.error == null)
-            {
-                const dataForm = {
-                    tipo: ["All in One", "Fijo", "Portatil", "WorkStation"].sort(),
-                    estado: ["En aula", "En soporte", "En prestamo", "De baja"].sort(),
-                    tipoReporte: ["Reporte general", "Reporte por salon"].sort(),
-                };
-                
-                if (dataTypeCon.typeCon == "serial")
-                {
-                    const dataSerial = {
-                        numero: req.body.conSerial
-                    }
-
-                    result = rule.ruleConSerial(dataSerial);
-
-                    if (result.error == null)
-                    {
-                        try {
-                            const salones = await knex.select("codigo", "nombre").from("salon").orderBy("nombre", "ACS");
-                            const equipos = await knex.select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
-                                            from("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
-                                            where("inventario", dataSerial.numero).
-                                            orWhere("serie", dataSerial.numero);   
-                            res.render("equipos", {data: {equipos: equipos, salones: salones, dataForm: dataForm, numPage: null, currentPage: null, usuario: req.session.nombreCompleto, privilegio: req.session.privilegio, message: req.flash("error")}});
-                        } catch (error) {
-                            next();
-                        }
-                    }
-                    else
-                    {
-                        req.flash("error", "Ops!!! algo raro paso aca");
-                        res.redirect("/equipos/0");
-                    }
-                }
-
-                if (dataTypeCon.typeCon == "salon")
-                {
-                    const dataSalon = {
-                        salon: req.body.conSalon
-                    };
-
-                    result = rule.ruleConSalon(dataSalon);
-
-                    if (result.error == null)
-                    {
-                        req.session.salonConsultado = dataSalon.salon;
-                        res.redirect("/equipos/0");
-                    }
-                    else
-                    {
-                        req.flash("error", "Ops!!! algo raro paso aca");
-                        res.redirect("/equipos/0");
-                    }
-                }
-            }
-            else
-            {
-                req.flash("error", "Ops!!! algo raro paso aca");
-                res.redirect("/equipos/0");
             }
         }
         else
