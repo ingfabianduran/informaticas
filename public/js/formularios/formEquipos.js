@@ -237,7 +237,7 @@ function drawChart(data, canvas, type)
         },
         type: type,
         data: {
-            datasets: [ {data: dinamicInfo.datasets, backgroundColor: dinamicInfo.backgroundColor,} ],
+            datasets: [ {data: dinamicInfo.datasets, backgroundColor: dinamicInfo.backgroundColor, borderColor: dinamicInfo.borderColor} ],
             labels: dinamicInfo.labels,
         },
     });
@@ -248,13 +248,21 @@ function getDinamicInfo(data)
     var dinamicInfo = {
         datasets: [],
         labels: [],
-        backgroundColor: ["rgb(255,152,0, 0.8)", "rgb(156,204,101, 0.8)", "rgb(46,46,46, 0.8)", "#rgb(141,110,99, 0.8)"],
+        backgroundColor: [],
+        borderColor: [],
     };
 
     for (let index = 0; index < data.length; index++) 
     {
-           dinamicInfo.datasets.push(data[index].total);
-           dinamicInfo.labels.push(data[index].label);
+            dinamicInfo.datasets.push(data[index].total);
+            dinamicInfo.labels.push(data[index].label);
+            
+            var r = Math.floor(Math.random()*256);
+            var g = Math.floor(Math.random()*256);          
+            var b = Math.floor(Math.random()*256);
+
+           dinamicInfo.backgroundColor.push('rgb(' + r + ',' + g + ',' + b + ', 0.4)');
+           dinamicInfo.borderColor.push('rgb(' + r + ',' + g + ',' + b + ', 1)');
     }
 
     return dinamicInfo;

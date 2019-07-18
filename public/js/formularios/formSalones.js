@@ -157,7 +157,7 @@ function drawChart(canvas, data, type)
         },
         type: type,
         data: {
-            datasets: [ {data: dinamicInfo.datasets, label: "Horas", backgroundColor: ["rgb(255,152,0,0.6)"]} ],
+            datasets: [ {data: dinamicInfo.datasets, label: "Horas", backgroundColor: dinamicInfo.backgroundColor, borderColor: dinamicInfo.borderColor}],
             labels: dinamicInfo.labels,
         },
     });
@@ -168,6 +168,8 @@ function getDinamicInfo(data)
     var dinamicInfo = {
         datasets: [],
         labels: [],
+        backgroundColor: [],
+        borderColor: [],
     };
 
     for (let index = 0; index < data.length; index++) 
@@ -175,6 +177,13 @@ function getDinamicInfo(data)
         dinamicInfo.datasets.push(data[index].total);
         dinamicInfo.labels.push(data[index].mes);
     }
+
+    var r = Math.floor(Math.random()*256);
+    var g = Math.floor(Math.random()*256);          
+    var b = Math.floor(Math.random()*256);
+
+    dinamicInfo.backgroundColor.push('rgb(' + r + ',' + g + ',' + b + ', 0.4)');
+    dinamicInfo.borderColor.push('rgb(' + r + ',' + g + ',' + b + ', 1)');
 
     return dinamicInfo;
 }
