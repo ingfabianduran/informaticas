@@ -46,31 +46,11 @@ module.exports = {
         const result = joi.validate(data, object);
         return result;
     }, 
-    // Rule validate type select: 
-    ruleTypeCon: function(data)
-    {
-        const object = joi.object().keys({
-            typeCon: joi.string().valid("serial", "salon").required(),
-        });
-
-        const result = joi.validate(data, object);
-        return result;
-    },
     // Validate serial or inventario:
     ruleConSerial: function(data)
     {
         const object = joi.object().keys({
-            numero: joi.string().required(),
-        });
-
-        const result = joi.validate(data, object);
-        return result;
-    },
-    // Validate numer codSalon:
-    ruleConSalon: function(data)
-    {
-        const object = joi.object().keys({
-            salon: joi.number().positive().required(),
+            codEquipo: joi.string().required(),
         });
 
         const result = joi.validate(data, object);
@@ -86,4 +66,17 @@ module.exports = {
         const result = joi.validate(data, object);
         return result;
     },
+    // Validate data for select equipos with salon: 
+    ruleListEquipos: function(data)
+    {
+        const object = joi.object().keys({
+            page: joi.number().allow(0).required(),
+            currentPage: joi.number().positive().required(),
+            limit: joi.number().positive().required(),
+            salon: joi.number().positive().required(),
+        });
+
+        const result = joi.validate(data, object);
+        return result;
+    }
 }

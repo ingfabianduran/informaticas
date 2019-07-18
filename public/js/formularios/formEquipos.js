@@ -30,31 +30,40 @@ function listarEquipos(page, element, isPagination, salon)
         beforeSend: function()
         {
             $("#divEquipos").addClass("active");
+            $("#formBuscarEquipos").addClass("loading");
         },
         success: function (response) 
         {
-            $("#tabEquipos tbody > tr").remove();
-            $("ul").children().removeClass("active");
-            $(element).parent().addClass("active");
-
-            if (response.equipos.length > 0)
+            if (response.status)
             {
-                $.each(response.equipos, function (index, equipo) 
-                { 
-                    $("#tabEquipos").append(rowsTableEquipo(equipo));     
-                });
+                $("#tabEquipos tbody > tr").remove();
+                $("ul").children().removeClass("active");
+                $(element).parent().addClass("active");
 
-                if (isPagination) listPagination(response.numPage, response.salon);
+                if (response.equipos.length > 0)
+                {
+                    $.each(response.equipos, function (index, equipo) 
+                    { 
+                        $("#tabEquipos").append(rowsTableEquipo(equipo));     
+                    });
+
+                    if (isPagination) listPagination(response.numPage, response.salon);
+                }
+                else
+                {
+                    $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+                }
             }
             else
             {
-                $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+                viewAlertError(response.message);
             }
         },
         complete: function()
         {
             setInterval(function(){
                 $("#divEquipos").removeClass("active");
+                $("#formBuscarEquipos").removeClass("loading");
             }, 2000);
 
             $("input[name='typeCon']").prop('checked', false);
@@ -71,29 +80,36 @@ function listarEquipo(codEquipo)
         url: "/listEquipo/" + codEquipo,
         beforeSend: function()
         {
-            $("#divEquipos").addClass("active");
+            $("#formBuscarEquipos").addClass("loading");
         },
         success: function (response) 
         {
-            $("#tabEquipos tbody > tr").remove();
-            $("#pagination li").remove();
+            if (response.status)
+            {
+                $("#tabEquipos tbody > tr").remove();
+                $("#pagination li").remove();
 
-            if (response.equipo.length > 0)
-            {
-                $.each(response.equipo, function (index, equipo) 
-                { 
-                    $("#tabEquipos").append(rowsTableEquipo(equipo));     
-                });
+                if (response.equipo.length > 0)
+                {
+                    $.each(response.equipo, function (index, equipo) 
+                    { 
+                        $("#tabEquipos").append(rowsTableEquipo(equipo));     
+                    });
+                }
+                else
+                {
+                    $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+                }
             }
-            else
+            else 
             {
-                $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+                viewAlertError(response.message);
             }
         },
         complete: function()
         {
             setInterval(function(){
-                $("#divEquipos").removeClass("active");
+                $("#formBuscarEquipos").removeClass("loading");
             }, 2000);
 
             $("input[name='typeCon']").prop('checked', false);
@@ -110,6 +126,7 @@ function rowsTableEquipo(equipo)
                     '<td>' + equipo.inventario + '</td>' + 
                     '<td>' + equipo.marca + '</td>' +
                     '<td>' + equipo.tipo + '</td>' +
+                    '<td>' + equipo.nombre + '</td>' +
                     '<td>' + 
                         '<span data-toggle="modal" data-target="#modalNuevoEquipo">' +
                             '<button class="btn btn-elegant btn-sm" data-id="' + equipo.codigo + '"data-toggle="tooltip" data-placement="right" title="Mas información" onclick="moreInfoEquipo(this)"><i class="fas fa-info"></i></button>' +
@@ -394,14 +411,44 @@ function validateFormReporte()
 // Validate form buscar equipo: 
 function validateFormConEquipo()
 {
+    // Add rules perzonalizadas: 
+    $.fn.form.settings.rules.requiredCod = function(value, adminLevel) 
+    {
+        if($("input[name='typeCon']:checked").val() == "serial") {
+            if (value.length == 0 || /^\s+$/.test(value)) return false;
+            else return true;
+        }
+        else {
+            return true;
+        }
+    };
+
+    // Add rules perzonalizadas: 
+    $.fn.form.settings.rules.requiredSalon = function(value, adminLevel) 
+    {
+        if($("input[name='typeCon']:checked").val() == "salon") {
+            if (value != "") return true;
+            else return false;
+        }
+        else {
+            return true;
+        }
+    };
+
     $("#formBuscarEquipos").form({
         fields: {
-            typeCon: {
-                identifier: "typeCon",
+            conSerial: {
+                identifier: "conSerial",
                 rules: [
-                    {type: "checked", prompt: "Seleccioné un tipo de consulta"}
+                    {type: "requiredCod", prompt: "Digite un valor"}
                 ]
             },
+            conSalon: {
+                identifier: "conSalon",
+                rules: [
+                    {type: "requiredSalon", prompt: "Seleccioné un salón"}
+                ]
+            }
         },
         inline: true, 
         on: 'blur',

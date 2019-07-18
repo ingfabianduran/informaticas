@@ -35,14 +35,23 @@ module.exports = {
             salon: req.params.salon
         };
         
-        const equipos = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
-                                select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
-                                where("salonUbicado", data.salon).limit(data.limit).offset(data.page);
-        
-        const cantidadEquipos = await knex("equipo").count("* AS total").where("salonUbicado", data.salon);
-        const numPage = Math.ceil(cantidadEquipos[0].total / 10);
+        const result = rule.ruleListEquipos(data);
 
-        res.send({equipos: equipos, numPage: numPage, salon: data.salon});
+        if (result.error == null)
+        {
+            const equipos = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
+                                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
+                                    where("salonUbicado", data.salon).limit(data.limit).offset(data.page);
+            
+            const cantidadEquipos = await knex("equipo").count("* AS total").where("salonUbicado", data.salon);
+            const numPage = Math.ceil(cantidadEquipos[0].total / 10);
+
+            res.send({status: true, equipos: equipos, numPage: numPage, salon: data.salon});
+        }
+        else
+        {
+            res.send({status: false, message: "Ops!!! algo raro paso por aca"});
+        }
     },
     // List equipo for inventario or serie:
     listEquipo: async function(req, res)
@@ -51,12 +60,21 @@ module.exports = {
             codEquipo: req.params.codEquipo
         };
 
-        const equipo = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
-                                select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
-                                where("inventario", data.codEquipo).
-                                orWhere("serie", data.codEquipo);
-        
-        res.send({equipo: equipo});
+        const result = rule.ruleConSerial(data);
+
+        if (result.error == null)
+        {
+            const equipo = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
+                                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
+                                    where("inventario", data.codEquipo).
+                                    orWhere("serie", data.codEquipo);
+            
+            res.send({status: true, equipo: equipo});
+        }
+        else
+        {
+            res.send({status: true, message: "Ops!!! algo raro paso por aca"});
+        }
     },
     // Render report estado equipo and total equipos: 
     viewReportEquipos: function(req, res)
