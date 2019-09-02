@@ -1,5 +1,6 @@
 const knex = require("../config/database");
 const rule = require("./rules/equiposRules");
+const templated = require("./templates/template");
 
 module.exports = {
     // Render view info table:
@@ -337,4 +338,28 @@ module.exports = {
             res.redirect("/");
         }
     },
+
+    getPdfEquipos: function(req, res)
+    {
+        const jsreport = require('jsreport-core')();
+        const content = templated.templatedPdf();
+
+        jsreport.init().then(() => {
+            return jsreport.render({
+                template: {
+                    content: content,
+                    engine: 'handlebars',
+                    recipe: 'chrome-pdf'
+                },
+                data: {
+                    foo: "world"
+                }
+            }).then((resp) => {
+                res.type('pdf');
+                res.end(resp.content, 'binary');
+            });
+        }).catch((e) => {
+            
+        });
+    }
 }

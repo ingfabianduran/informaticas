@@ -37,6 +37,7 @@ router.get("/moreInfoEquipo/:codEquipo", equiposController.viewMoreInfoEquipos);
 router.post("/newEquipo", equiposController.insertEquipo);
 router.post("/updateEquipo", equiposController.updateInfoEquipo);
 router.post("/reportInventario", equiposController.getInfoInventario);
+router.get("/reportPdf", equiposController.getPdfEquipos);
 // Salones:
 router.get("/salones", salonesController.viewDahsboard);
 router.get("/reportSalones", salonesController.viewReportSalones);
