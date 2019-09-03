@@ -14,7 +14,22 @@ module.exports = {
                                     '<td style="border: solid 2px rgb(0, 0, 0);"><h4>AULAS INFORMÁTICAS</h4></td>' +
                                 '</tr>' +
                             '</table>' +
-                            '<div style="margin-top: 80px; text-align: center;"><h4>ACTA ADMINISTRATIVA DE ENTREGA DE EQUIPOS DE CÓMPUTO</h4></div>'
+                            '<div style="margin-top: 80px; text-align: center;"><h4>ACTA ADMINISTRATIVA DE ENTREGA DE EQUIPOS DE CÓMPUTO</h4></div>' +
+                            '<div style="width: 80%; margin-top: 80px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 13pt;">' +
+                                '<p>Siendo el dia 25/05/1993 se realiza la entrega de unos equipos al area de Tecnologia al Sr@ Henrry Diaz. Los datos de los equipos se relacionan a continuación.<p>' +
+                                '<h4>Listado de Equipos:</h4>' +
+                                '<div style="height: 30%; border: solid 2px rgb(0, 0, 0);"></div>' +
+                                '<div style="float: left; margin-top: 45px;">' +
+                                    '<p>__________________________</p>' +
+                                    '<p style="font-weight: bold">Entrega:</p>' +
+                                    '<p style="font-weight: bold">Auxiliar de Aulas Informaticas</p>' +
+                                '</div>' +
+                                '<div style="float: right; margin-top: 45px;">' +
+                                    '<p>__________________________</p>' +
+                                    '<p style="font-weight: bold">Recibe:</p>' +
+                                    '<p style="font-weight: bold">C.C:</p>' +
+                                '</div>' +
+                            '</div>' +
                         '</div>' +
                     '</body>' +
                 '</html>';

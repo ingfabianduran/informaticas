@@ -338,7 +338,7 @@ module.exports = {
             res.redirect("/");
         }
     },
-
+    // Render and view PDF dinamic: 
     getPdfEquipos: function(req, res)
     {
         const jsreport = require('jsreport-core')();
