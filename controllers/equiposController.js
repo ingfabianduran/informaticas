@@ -353,7 +353,7 @@ module.exports = {
                 },
                 data: {
                     foo: "world"
-                }
+                },
             }).then((resp) => {
                 res.type('pdf');
                 res.end(resp.content, 'binary');
