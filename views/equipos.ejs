@@ -7,6 +7,7 @@
         <%- include("modales/modalBuscarEquipos") %>
         <%- include("modales/modalReporteEquipos") %>
         <%- include("modales/modalNuevoEquipo") %>
+        <%- include("modales/modalPdf") %>
         <div class="dimmable">
             <div id="divEquipos" class="ui active dimmer">
                 <div class="ui large text loader">Loading</div>
@@ -44,7 +45,8 @@
                             <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de Equipos</h2>
                             <div class="card-body">
                                 <span class="table-add float-right mb-3 mr-1">
-                                    <span data-toggle="modal" data-target="#modalNuevoEquipo"><button id="btNuevoEquipo" class="btn btn-elegant" data-toggle="tooltip" data-placement="left" title="Agregar equipo"><i class="fas fa-plus"></i></button></span>
+                                    <span data-toggle="modal" data-target="#modalReportePdf"><button id="btEntregaEquipos" class="btn red darken-1 text-white" data-toggle="tooltip" data-placement="left" title="Entrega de Equipos"><i class="fas fa-file-pdf"></i></button></span>
+                                    <span data-toggle="modal" data-target="#modalNuevoEquipo"><button id="btNuevoEquipo" class="btn btn-elegant" data-toggle="tooltip" data-placement="top" title="Agregar equipo"><i class="fas fa-plus"></i></button></span>
                                     <span data-toggle="modal" data-target="#modalBuscar"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="top" title="Buscar equipos"><i class="fas fa-search mr-1"></i></button></span>
                                     <span data-toggle="modal" data-target="#modalReporte"><button class="btn orange text-white" data-toggle="tooltip" data-placement="right" title="Generar reporte"><i class="fas fa-file-excel"></i></button></span>
                                 </span>

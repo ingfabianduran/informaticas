@@ -1,0 +1,47 @@
+<div class="modal fade" id="modalReportePdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header light-green lighten-1 text-white">
+                <h3 class="modal-title font-weight-bold text-uppercase" id="exampleModalLabel">Entrega de Equipos</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form class="ui form m-2 large" id="formReportePdf" autocomplete="off">
+                <div class="modal-body">
+                    <div class="row mb-1">
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Area:</label>
+                                <input type="text" name="area" id="area" placeholder="Area o Lugar para donde van">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="field required">
+                                <label>Responsable:</label>
+                                <input type="text" name="responsable" id="responsable" placeholder="Persona encargada de los equipos">
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="ui dividing header text-uppercase font-weight-bold">Listado de Equipos:</h3>
+                    <div class="col-12 mt-4 mb-4">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" aria-hidden="true"><i class="fas fa-plus"></i> Agregar Equipo</button> 
+                    </div>
+                    <div id="equiposDinamicos">
+                        <div class="row mb-3">
+                            <div class="col-10">
+                                <input type="number" placeholder="Inventario del Equipo">
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn orange text-white"><i class="fas fa-download"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

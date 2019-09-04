@@ -343,6 +343,13 @@ module.exports = {
     {
         const jsreport = require('jsreport-core')();
         const content = templated.templatedPdf();
+        
+        const data = {
+            fecha: "25/05/2019",
+            area: "Tecnologia",
+            responsable: "Henry Diaz",
+            equipos: [{inventario: "300000029500"}, {inventario: "300000029500"}, {inventario: "300000029500"}, {inventario: "300000029500"}, {inventario: "300000029500"}]
+        };
 
         jsreport.init().then(() => {
             return jsreport.render({
@@ -352,7 +359,7 @@ module.exports = {
                     recipe: 'chrome-pdf'
                 },
                 data: {
-                    foo: "world"
+                    data: data
                 },
             }).then((resp) => {
                 res.type('pdf');
