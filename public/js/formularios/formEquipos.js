@@ -20,6 +20,9 @@ $(document).ready(function ()
         $('#setInfoEquipos').trigger("reset");
         $(".ui.dropdown").dropdown("clear");
     });
+
+    agregarInventario();
+    eliminarInventario();
 });
 // AJAX with render info equipos: 
 function listarEquipos(page, element, isPagination, salon)
@@ -512,5 +515,31 @@ function viewAlertError(message)
     Toast.fire({
         type: 'error',
         title: message,
+    });
+}
+// Agrega dinamicamente un campo de texto con un boton para eliminar el elemento creado: 
+function agregarInventario()
+{
+    $("#btAddInventario").click(function (e) { 
+        e.preventDefault();
+    
+        $("#equiposDinamicos").append(  '<div id="filaInventario" class="row mb-3">' +
+                                            '<div class="col-10">' +
+                                                '<input type="text" placeholder="Inventario del Equipo">' +
+                                            '</div>' +
+                                            '<div class="col-2">' +
+                                                '<button id="btEliminarInventario" type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>' +
+                                            '</div>' +
+                                        '</div>');
+        
+        $("#filaInventario").hide().fadeIn('slow');
+    });    
+}
+// Se elimina los elementos dependiendo el boton seleccionados: 
+function eliminarInventario()
+{
+    $("#equiposDinamicos").on("click", ".btn.btn-danger.px-3", function () 
+    {
+        $(this).closest(".row.mb-3").remove();
     });
 }

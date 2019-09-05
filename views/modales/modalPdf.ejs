@@ -25,15 +25,15 @@
                     </div>
                     <h3 class="ui dividing header text-uppercase font-weight-bold">Listado de Equipos:</h3>
                     <div class="col-12 mt-4 mb-4">
-                        <button type="button" class="btn btn-primary btn-lg btn-block" aria-hidden="true"><i class="fas fa-plus"></i> Agregar Equipo</button> 
+                        <button id="btAddInventario" type="button" class="btn btn-primary btn-lg btn-block" aria-hidden="true"><i class="fas fa-plus"></i> Agregar Equipo</button> 
                     </div>
                     <div id="equiposDinamicos">
-                        <div class="row mb-3">
-                            <div class="col-10">
-                                <input type="number" placeholder="Inventario del Equipo">
+                        <div id="filaInventario" class="row mb-3">
+                            <div class="col-10">    
+                                <input type="text" placeholder="Inventario del Equipo">
                             </div>
                             <div class="col-2">
-                                <button type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>
+                                <button id="btEliminarInventario" value="3000" type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>
                             </div>
                         </div>
                     </div>
