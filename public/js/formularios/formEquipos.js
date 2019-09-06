@@ -8,6 +8,7 @@ $(document).ready(function ()
     validateFormEquipos();
     validateFormConEquipo();
     validateFormEquipos("newEquipo", null);
+    validateFormPdf();
     
     // CSS Semantic UI: 
     $(".ui.dropdown").dropdown();
@@ -525,7 +526,9 @@ function agregarInventario()
     
         $("#equiposDinamicos").append(  '<div id="filaInventario" class="row mb-3">' +
                                             '<div class="col-10">' +
-                                                '<input type="text" placeholder="Inventario del Equipo">' +
+                                                '<div class="field">' +
+                                                    '<input type="text" id="inventarioPdf" name="inventarioPdf" placeholder="Inventario del Equipo">' +
+                                                '</div>' +
                                             '</div>' +
                                             '<div class="col-2">' +
                                                 '<button id="btEliminarInventario" type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>' +
@@ -542,4 +545,47 @@ function eliminarInventario()
     {
         $(this).closest(".row.mb-3").remove();
     });
+}
+// Validate form PDF rport:
+function validateFormPdf()
+{
+    $("#formReportePdf").form({
+        fields: {
+            area: {
+                identifier: "area",
+                rules: [
+                    {type: "empty", prompt: "Digite un area"}
+                ]
+            }, 
+            responsable: {
+                identifier: "responsable",
+                rules: [
+                    {type: "empty", prompt: "Digite un responsable"}
+                ]
+            },
+        },
+        inline: true, 
+        on: 'blur',
+        onSuccess: function(event)
+        {
+            event.preventDefault();
+            validateArrayInput();
+        }
+    });
+}
+// Validate dinamic input and add CSS class where condition is false: 
+function validateArrayInput()
+{
+    var isValid = true;
+
+    $('#equiposDinamicos').find('input').each(function() {
+
+        if ($(this).val().length == 0) 
+        {
+            $(this).parent().addClass("error");
+            isValid = false;    
+        }
+    });
+
+    if (isValid) alert("OK");
 }
