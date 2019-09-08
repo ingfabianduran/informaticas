@@ -527,7 +527,7 @@ function agregarInventario()
         $("#equiposDinamicos").append(  '<div id="filaInventario" class="row mb-3">' +
                                             '<div class="col-10">' +
                                                 '<div class="field">' +
-                                                    '<input type="text" id="inventarioPdf" name="inventarioPdf" placeholder="Inventario del Equipo">' +
+                                                    '<input type="text" name="inventarioPdf[]" placeholder="Inventario del Equipo">' +
                                                 '</div>' +
                                             '</div>' +
                                             '<div class="col-2">' +
@@ -549,6 +549,27 @@ function eliminarInventario()
 // Validate form PDF rport:
 function validateFormPdf()
 {
+    // Add rules perzonalizadas: 
+    $.fn.form.settings.rules.requiredInventario = function(value, adminLevel) 
+    {
+        var isValid = true;
+
+        $('#equiposDinamicos').find('input').each(function() {
+
+            if ($(this).val().length == 0) 
+            {
+                $(this).parent().addClass("error");
+                isValid = false;    
+            }
+            else
+            {
+                $(this).parent().removeClass("error");
+            }
+        });
+
+        return isValid;
+    };
+
     $("#formReportePdf").form({
         fields: {
             area: {
@@ -563,29 +584,17 @@ function validateFormPdf()
                     {type: "empty", prompt: "Digite un responsable"}
                 ]
             },
-        },
-        inline: true, 
+            inventarioPdf: {
+                identifier: "inventarioPdf",
+                rules: [
+                    {type: "requiredInventario", prompt: "Digite un inventario"}
+                ]
+            },
+        }, 
         on: 'blur',
         onSuccess: function(event)
         {
-            event.preventDefault();
-            validateArrayInput();
+            // Douwload PDF
         }
     });
-}
-// Validate dinamic input and add CSS class where condition is false: 
-function validateArrayInput()
-{
-    var isValid = true;
-
-    $('#equiposDinamicos').find('input').each(function() {
-
-        if ($(this).val().length == 0) 
-        {
-            $(this).parent().addClass("error");
-            isValid = false;    
-        }
-    });
-
-    if (isValid) alert("OK");
 }

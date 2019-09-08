@@ -18,7 +18,7 @@ module.exports = {
                             '<div style="width: 80%; margin-top: 80px; margin-left: auto; margin-right: auto; text-align: justify; font-size: 13pt;">' +
                                 '<p>Siendo el dia {{data.fecha}} se realiza la entrega de unos equipos al area de {{data.area}} al Sr@ {{data.responsable}}. Los datos de los equipos se relacionan a continuación.<p>' +
                                 '<h4>Listado de Equipos:</h4>' +
-                                '<div style="height: 30%; border: solid 2px rgb(0, 0, 0);">{{#each data.equipos}} {{inventario}} - {{/each}}</div>' +
+                                '<div style="height: 30%; border: solid 2px rgb(0, 0, 0);">{{#each data.equipos}} {{this}} - {{/each}}</div>' +
                                 '<div style="float: left; margin-top: 45px;">' +
                                     '<p>__________________________</p>' +
                                     '<p style="font-weight: bold">Entrega:</p>' +

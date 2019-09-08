@@ -78,5 +78,18 @@ module.exports = {
 
         const result = joi.validate(data, object);
         return result;
+    },
+    // Validate data before generate PDF:
+    ruleGeneratePdf: function(data)
+    {
+        const object = joi.object().keys({
+            fecha: joi.date().required(),
+            area: joi.string().min(6).max(30).required(),
+            responsable: joi.string().min(5).max(45).required(),
+            equipos: joi.array().items(joi.string().required()).min(1)
+        });
+
+        const result = joi.validate(data, object);
+        return result;
     }
 }

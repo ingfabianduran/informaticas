@@ -340,33 +340,45 @@ module.exports = {
     },
     // Render and view PDF dinamic: 
     getPdfEquipos: function(req, res)
-    {
-        const jsreport = require('jsreport-core')();
-        const content = templated.templatedPdf();
-        
+    {   
+        const moment = require('moment');
+
         const data = {
-            fecha: "25/05/2019",
-            area: "Tecnologia",
-            responsable: "Henry Diaz",
-            equipos: [{inventario: "300000029500"}, {inventario: "300000029500"}, {inventario: "300000029500"}, {inventario: "300000029500"}, {inventario: "300000029500"}]
+            fecha: moment().format("YYYY-MM-DD"),
+            area: req.body.area.toUpperCase(),
+            responsable: req.body.responsable.toUpperCase(),
+            equipos: req.body.inventarioPdf
         };
 
-        jsreport.init().then(() => {
-            return jsreport.render({
-                template: {
-                    content: content,
-                    engine: 'handlebars',
-                    recipe: 'chrome-pdf'
-                },
-                data: {
-                    data: data
-                },
-            }).then((resp) => {
-                res.type('pdf');
-                res.end(resp.content, 'binary');
+        const result = rule.ruleGeneratePdf(data);
+
+        if (result.error == null)
+        {
+            const jsreport = require('jsreport-core')();
+            const content = templated.templatedPdf();
+
+            jsreport.init().then(() => {
+                return jsreport.render({
+                    template: {
+                        content: content,
+                        engine: 'handlebars',
+                        recipe: 'chrome-pdf'
+                    },
+                    data: {
+                        data: data
+                    },
+                }).then((resp) => {
+                    res.type('pdf');
+                    res.end(resp.content, 'binary');
+                });
+            }).catch((e) => {
+                
             });
-        }).catch((e) => {
-            
-        });
+        }
+        else
+        {
+            req.flash("error", "Ops!!! algo raro paso aca");
+            res.redirect("/equipos/0");
+        }
     }
 }

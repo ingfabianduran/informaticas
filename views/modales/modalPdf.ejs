@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="ui form m-2 large" id="formReportePdf" autocomplete="off">
+            <form class="ui form m-2 large" id="formReportePdf" method="POST" action="/reportPdf" autocomplete="off">
                 <div class="modal-body">
                     <div class="row mb-1">
                         <div class="col-6">
@@ -31,7 +31,7 @@
                         <div id="filaInventario" class="row mb-3">
                             <div class="col-10">
                                 <div class="field">
-                                    <input type="text" id="inventarioPdf" name="inventarioPdf" placeholder="Inventario del Equipo">
+                                    <input type="text" id="inventarioPdf" name="inventarioPdf[]" placeholder="Inventario del Equipo">
                                 </div>    
                             </div>
                             <div class="col-2">

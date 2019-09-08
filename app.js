@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var routes = require('./routes/routes');
+var bodyParser = require('body-parser');
 var app = express();
 
 const session = require("express-session");
@@ -20,6 +21,7 @@ app.use(session({
 app.use(flash());
 app.use(helmet());
 app.use(compression());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
