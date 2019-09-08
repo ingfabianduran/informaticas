@@ -12,6 +12,7 @@ module.exports = {
                 tipo: ["All in One", "Fijo", "Portatil", "WorkStation"].sort(),
                 estado: ["En aula", "En soporte", "En prestamo", "De baja"].sort(),
                 tipoReporte: ["Reporte general", "Reporte por salon"].sort(),
+                tipoReportePdf: ["Equipos especificos", "Salón"].sort()
             };
 
             knex("salon").select("codigo", "nombre").orderBy("nombre", "ACS").then(function(salones){

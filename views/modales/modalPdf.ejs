@@ -23,20 +23,42 @@
                             </div>
                         </div>
                     </div>
-                    <h3 class="ui dividing header text-uppercase font-weight-bold">Listado de Equipos:</h3>
-                    <div class="col-12 mt-4 mb-4">
-                        <button id="btAddInventario" type="button" class="btn btn-primary btn-lg btn-block" aria-hidden="true"><i class="fas fa-plus"></i> Agregar Equipo</button> 
+                    <h3 class="ui dividing header text-uppercase font-weight-bold">Tipo de reporte:</h3>
+                    <div class="field required">
+                        <label>Tipo de reporte</label>
+                        <select class="ui search dropdown" name="typeReportPdf" id="typeReportPdf">
+                            <option value="">Seleccioné</option>
+                            <% for(let index = 0; index < data.dataForm.tipoReportePdf.length; index++) { %>
+                                <option value='<%= data.dataForm.tipoReportePdf[index] %>'><%= data.dataForm.tipoReportePdf[index] %></option>
+                            <% } %>
+                        </select>
                     </div>
-                    <div id="equiposDinamicos">
-                        <div id="filaInventario" class="row mb-3">
-                            <div class="col-10">
-                                <div class="field">
-                                    <input type="text" id="inventarioPdf" name="inventarioPdf[]" placeholder="Inventario del Equipo">
-                                </div>    
+                    <div id="equiposEspecificos" class="d-none">
+                        <div class="col-12 mt-4 mb-4">
+                            <button id="btAddInventario" type="button" class="btn btn-primary btn-lg btn-block" aria-hidden="true"><i class="fas fa-plus"></i> Agregar Equipo</button> 
+                        </div>
+                        <div id="equiposDinamicos">
+                            <div id="filaInventario" class="row mb-3">
+                                <div class="col-10">
+                                    <div class="field">
+                                        <input type="text" id="inventarioPdf" name="inventarioPdf[]" placeholder="Inventario del Equipo">
+                                    </div>    
+                                </div>
+                                <div class="col-2">
+                                    <button id="btEliminarInventario" type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>
+                                </div>
                             </div>
-                            <div class="col-2">
-                                <button id="btEliminarInventario" type="button" class="btn btn-danger px-3"><i class="fas fa-trash-alt"></i></button>
-                            </div>
+                        </div>
+                    </div>
+                    <div id="equiposSalon" class="d-none">
+                        <div class="field required">
+                            <label>Salón ubicado:</label>
+                            <select class="ui search dropdown" name="salonPdf" id="salonPdf">
+                                <option value="">Seleccioné</option>
+                                <% for(let index = 0; index < data.salones.length; index++) { %>
+                                    <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                                <% } %>
+                            </select>
                         </div>
                     </div>
                 </div>

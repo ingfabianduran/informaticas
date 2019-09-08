@@ -9,6 +9,7 @@ $(document).ready(function ()
     validateFormConEquipo();
     validateFormEquipos("newEquipo", null);
     validateFormPdf();
+    validateTypeReportPdf();
     
     // CSS Semantic UI: 
     $(".ui.dropdown").dropdown();
@@ -516,6 +517,28 @@ function viewAlertError(message)
     Toast.fire({
         type: 'error',
         title: message,
+    });
+}
+// add class or remove class depend type report select: 
+function validateTypeReportPdf()
+{
+    $("#typeReportPdf").change(function (e) 
+    { 
+        e.preventDefault();
+        
+        if ($(this).val() == "Equipos especificos")
+        {
+            $("#equiposEspecificos").removeClass("d-none");
+            $("#equiposSalon").addClass("d-none");
+            $("#equiposEspecificos").hide().fadeIn('slow');
+        }
+
+        if ($(this).val() == "Salón")
+        {
+            $("#equiposEspecificos").addClass("d-none");
+            $("#equiposSalon").removeClass("d-none");
+            $("#equiposSalon").hide().fadeIn('slow');
+        }
     });
 }
 // Agrega dinamicamente un campo de texto con un boton para eliminar el elemento creado: 
