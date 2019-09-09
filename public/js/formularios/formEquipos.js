@@ -575,22 +575,42 @@ function validateFormPdf()
     // Add rules perzonalizadas: 
     $.fn.form.settings.rules.requiredInventario = function(value, adminLevel) 
     {
-        var isValid = true;
+        const typeReport = $("#typeReportPdf").val();
 
-        $('#equiposDinamicos').find('input').each(function() {
+        if (typeReport == "Equipos especificos")
+        {
+            var isValid = true;
 
-            if ($(this).val().length == 0) 
-            {
-                $(this).parent().addClass("error");
-                isValid = false;    
-            }
-            else
-            {
-                $(this).parent().removeClass("error");
-            }
-        });
+            $('#equiposDinamicos').find('input').each(function() {
 
-        return isValid;
+                if ($(this).val().length == 0) 
+                {
+                    $(this).parent().addClass("error");
+                    isValid = false;    
+                }
+                else
+                {
+                    $(this).parent().removeClass("error");
+                }
+            });
+
+            return isValid;
+        }
+
+        return true;
+    };
+
+    $.fn.form.settings.rules.requiredSalon = function(value, adminLevel) 
+    {
+        const typeReport = $("#typeReportPdf").val();
+
+        if (typeReport == "Salón")
+        {
+            if (value != "") return true;
+            else return false;
+        }
+
+        return true;
     };
 
     $("#formReportePdf").form({
@@ -607,12 +627,25 @@ function validateFormPdf()
                     {type: "empty", prompt: "Digite un responsable"}
                 ]
             },
+            observacionesPdf: {
+                identifier: "observacionesPdf",
+                rules: [
+                    {type: "maxLength[100]", prompt: "Maximo 100 caracteres"}
+                ]
+            },
+            salonPdf: {
+                identifier: "salonPdf",
+                rules: [
+                    {type: "requiredSalon", prompt: "Seleccioné un salón"}
+                ]
+            },
             inventarioPdf: {
                 identifier: "inventarioPdf",
                 rules: [
                     {type: "requiredInventario", prompt: "Digite un inventario"}
                 ]
             },
+            
         }, 
         on: 'blur',
         onSuccess: function(event)

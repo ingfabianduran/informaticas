@@ -340,16 +340,35 @@ module.exports = {
         }
     },
     // Render and view PDF dinamic: 
-    getPdfEquipos: function(req, res)
+    getPdfEquipos: async function(req, res)
     {   
         const moment = require('moment');
-
-        const data = {
+        
+        var data = {
             fecha: moment().format("YYYY-MM-DD"),
             area: req.body.area.toUpperCase(),
             responsable: req.body.responsable.toUpperCase(),
-            equipos: req.body.inventarioPdf
+            equipos: null,
+            observaciones: req.body.observacionesPdf.toUpperCase()
         };
+
+        if (data.observaciones == null || data.observaciones == undefined || data.observaciones == "") data.observaciones = "Sin observaciones";
+
+        if (req.body.typeReportPdf == "Equipos especificos") 
+        {
+            data.equipos = req.body.inventarioPdf;
+        }
+
+        if (req.body.typeReportPdf == "Salón")
+        {
+            const salon = req.body.salonPdf;
+            const inventarios = await knex.select("equipo.inventario").from("equipo").where("equipo.salonUbicado", salon);
+            const inventarioFormat = JSON.parse(JSON.stringify(inventarios));
+            var arrayInventarios = [];
+
+            for (let index = 0; index < inventarioFormat.length; index ++) arrayInventarios.push(inventarioFormat[index].inventario);
+            data.equipos = arrayInventarios;
+        }
 
         const result = rule.ruleGeneratePdf(data);
 
@@ -373,7 +392,8 @@ module.exports = {
                     res.end(resp.content, 'binary');
                 });
             }).catch((e) => {
-                
+                req.flash("error", "Ops!!! algo raro paso aca");
+                res.redirect("/equipos/0");
             });
         }
         else

@@ -86,7 +86,8 @@ module.exports = {
             fecha: joi.date().required(),
             area: joi.string().min(6).max(30).required(),
             responsable: joi.string().min(5).max(45).required(),
-            equipos: joi.array().items(joi.string().required()).min(1)
+            equipos: joi.array().items(joi.string().required()).min(1), 
+            observaciones: joi.string().max(100)
         });
 
         const result = joi.validate(data, object);

@@ -9,7 +9,7 @@
             </div>
             <form class="ui form m-2 large" id="formReportePdf" method="POST" action="/reportPdf" autocomplete="off">
                 <div class="modal-body">
-                    <div class="row mb-1">
+                    <div class="row mb-3">
                         <div class="col-6">
                             <div class="field required">
                                 <label>Area:</label>
@@ -20,6 +20,14 @@
                             <div class="field required">
                                 <label>Responsable:</label>
                                 <input type="text" name="responsable" id="responsable" placeholder="Persona encargada de los equipos">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="field">
+                                <label>¿Alguna Observación?</label>
+                                <textarea rows="2" name="observacionesPdf" id="observacionesPdf"></textarea>
                             </div>
                         </div>
                     </div>
