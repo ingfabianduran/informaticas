@@ -362,11 +362,15 @@ module.exports = {
         if (req.body.typeReportPdf == "Salón")
         {
             const salon = req.body.salonPdf;
-            const inventarios = await knex.select("equipo.inventario").from("equipo").where("equipo.salonUbicado", salon);
-            const inventarioFormat = JSON.parse(JSON.stringify(inventarios));
+            const inventarios = await knex.select("equipo.inventario", "equipo.serie").from("equipo").where("equipo.salonUbicado", salon).andWhere("equipo.estado", "En aula");
             var arrayInventarios = [];
 
-            for (let index = 0; index < inventarioFormat.length; index ++) arrayInventarios.push(inventarioFormat[index].inventario);
+            for (let index = 0; index < inventarios.length; index ++) 
+            {
+                if (inventarios[index].inventario.trim() == "LEASING") arrayInventarios.push(inventarios[index].serie); 
+                else arrayInventarios.push(inventarios[index].inventario);
+            }
+            
             data.equipos = arrayInventarios;
         }
 
