@@ -2,108 +2,103 @@
     <head>
         <%- include("head.ejs") %>
     </head>
-    <body>
+    <body id="container">
         <%- include("nav.ejs") %>
-        <script src="/js/formularios/formRegistro.js"></script>
         <script src="/js/componentes/ajaxError.js"></script>
-        <div class="dimmable">
-            <div id="divRegistro" class="ui active dimmer">
-                <div class="ui large text loader">Loading</div>
-            </div>
-            <div class="container-fluid mt-5 animated bounceIn" style="height: 100%">
-                <div class="row justify-content-center">
-                    <div class="col-md-10 col-lg-10 col-xl-10 mt-5">
-                        <div class="card">
-                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Registro de Entrada</h2>
-                            <div class="card-body">
-                                <form class="ui form segment large" id="formRegistro" autocomplete="off">
-                                    <h2 class="ui dividing header text-uppercase font-weight-bold">Información del Usuario</h2>
-                                    <div class="field required">
-                                        <label>Responsable:</label>
-                                        <div class="ui search">
-                                            <input class="prompt" type="text" name="responsable" id="responsable" placeholder="Nombre del responsable">
-                                            <div class="results"></div>
+        <script src="/js/formularios/formRegistro.js"></script>
+        <div class="container-fluid mt-5 mb-4 animated bounceIn">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-10 col-xl-10 mt-5">
+                    <div class="card">
+                        <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Registro de Entrada</h2>
+                        <div class="card-body">
+                            <form class="ui form segment large" id="formRegistro" autocomplete="off">
+                                <h2 class="ui dividing header text-uppercase font-weight-bold">Información del Usuario</h2>
+                                <div class="field required">
+                                    <label>Responsable:</label>
+                                    <div class="ui search">
+                                        <input class="prompt" type="text" name="responsable" id="responsable" placeholder="Nombre del responsable">
+                                        <div class="results"></div>
+                                    </div>
+                                </div>
+                                <div class="field required">
+                                    <label>Programa Académico:</label>
+                                    <select class="ui search dropdown" name="programa" id="programa">
+                                        <option value="">Seleccioné</option>
+                                        <% for( let index = 0; index < data.programas.length; index++ ) { %>
+                                            <option value='<%= data.programas[index].codigo %>'><%= data.programas[index].nombre %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <h2 class="ui dividing header text-uppercase font-weight-bold">Información de la Clase</h2>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-1">
+                                        <div class="field required">
+                                            <label>Salón:</label>
+                                            <select multiple="" class="ui search dropdown" name="salon" id="salon">
+                                                <option value="">Seleccioné</option>
+                                                <% for( let index = 0; index < data.salones.length; index++ ) { %>
+                                                    <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
+                                                <% } %>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="field required">
-                                        <label>Programa Académico:</label>
-                                        <select class="ui search dropdown" name="programa" id="programa">
-                                            <option value="">Seleccioné</option>
-                                            <% for( let index = 0; index < data.programas.length; index++ ) { %>
-                                                <option value='<%= data.programas[index].codigo %>'><%= data.programas[index].nombre %></option>
-                                            <% } %>
-                                        </select>
+                                    <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mt-1">
+                                        <div class="field required">
+                                            <label>Hora Inicio:</label>
+                                            <select class="ui search dropdown" name="inicio" id="inicio">
+                                                <option value="">Seleccioné</option>
+                                                <% for( let index = 0; index < data.horas.length; index++ ) { %>
+                                                    <option value='<%= data.horas[index].codigo %>'><%= data.horas[index].hora %></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <h2 class="ui dividing header text-uppercase font-weight-bold">Información de la Clase</h2>
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-1">
-                                            <div class="field required">
-                                                <label>Salón:</label>
-                                                <select multiple="" class="ui search dropdown" name="salon" id="salon">
-                                                    <option value="">Seleccioné</option>
-                                                    <% for( let index = 0; index < data.salones.length; index++ ) { %>
-                                                        <option value='<%= data.salones[index].codigo %>'><%= data.salones[index].nombre %></option>
-                                                    <% } %>
-                                                </select>
+                                    <div class="col-sm-12 col-md-3 col-lg-3 col-col-xl-3 mt-1">
+                                        <div class="field required">
+                                            <label>Hora Final:</label>
+                                            <select class="ui search dropdown" name="final" id="final">
+                                                <option value="">Seleccioné</option>
+                                                <% for( let index = 0; index < data.horas.length; index++ ) { %>
+                                                    <option value='<%= data.horas[index].codigo %>'><%= data.horas[index].hora %></option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field mt-3">
+                                    <label>¿Alguna Observación?</label>
+                                    <textarea rows="2" name="observaciones" id="observaciones"></textarea>
+                                </div>
+                                <div class="row d-flex align-items-center mt-5">
+                                    <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+                                        <div class="ui info large message" role="alert">
+                                            <h2 class="ui dividing header text-uppercase">Términos y Condiciones</h2>
+                                            <p class="mt-4">Los o el salon seleccionado cuenta con los siguientes equipos:</p>
+                                            <div class="ml-4">
+                                                <ul class="list">
+                                                    <li>Numero de Equipos: <label id="cantidad" name="cantidad" class="font-weight-bold">##</label></li>
+                                                </ul>
                                             </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3 mt-1">
-                                            <div class="field required">
-                                                <label>Hora Inicio:</label>
-                                                <select class="ui search dropdown" name="inicio" id="inicio">
-                                                    <option value="">Seleccioné</option>
-                                                    <% for( let index = 0; index < data.horas.length; index++ ) { %>
-                                                        <option value='<%= data.horas[index].codigo %>'><%= data.horas[index].hora %></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-12 col-md-3 col-lg-3 col-col-xl-3 mt-1">
-                                            <div class="field required">
-                                                <label>Hora Final:</label>
-                                                <select class="ui search dropdown" name="final" id="final">
-                                                    <option value="">Seleccioné</option>
-                                                    <% for( let index = 0; index < data.horas.length; index++ ) { %>
-                                                        <option value='<%= data.horas[index].codigo %>'><%= data.horas[index].hora %></option>
-                                                    <% } %>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="field mt-3">
-                                        <label>¿Alguna Observación?</label>
-                                        <textarea rows="2" name="observaciones" id="observaciones"></textarea>
-                                    </div>
-                                    <div class="row d-flex align-items-center mt-5">
-                                        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                                            <div class="ui info large message" role="alert">
-                                                <h2 class="ui dividing header text-uppercase">Términos y Condiciones</h2>
-                                                <p class="mt-4">Los o el salon seleccionado cuenta con los siguientes equipos:</p>
-                                                <div class="ml-4">
-                                                    <ul class="list">
-                                                        <li>Numero de Equipos: <label id="cantidad" name="cantidad" class="font-weight-bold">##</label></li>
-                                                    </ul>
-                                                </div>
-                                                <P class="font-weight-bold font-italic">Por favor reportarle a los auxiliares cuando su clase haya finalizado:</P>
-                                                <div class="inline field mt-2 required">
-                                                    <div class="ui checkbox">
-                                                        <input type="checkbox" name="terminos" id="terminos">
-                                                        <label class="font-weight-bolder font-italic text-uppercase">Acepto total responsabilidad sobre el aula</label>
-                                                    </div>
+                                            <P class="font-weight-bold font-italic">Por favor reportarle a los auxiliares cuando su clase haya finalizado:</P>
+                                            <div class="inline field mt-2 required">
+                                                <div class="ui checkbox">
+                                                    <input type="checkbox" name="terminos" id="terminos">
+                                                    <label class="font-weight-bolder font-italic text-uppercase">Acepto total responsabilidad sobre el aula</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-2">
-                                            <button type="submit" class="btn orange btn-block">Registrar</button>
-                                            <a type="reset" class="btn btn-elegant btn-block mt-3" href="/registro">Cancelar</a>
-                                        </div>
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 mt-2">
+                                        <button type="submit" class="btn orange btn-block">Registrar</button>
+                                        <a type="reset" class="btn btn-elegant btn-block mt-3" href="/registro">Cancelar</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div> 
-            </div>
+                </div>
+            </div> 
         </div>
     </body>
 </html>

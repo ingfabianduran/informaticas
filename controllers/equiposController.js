@@ -42,7 +42,7 @@ module.exports = {
         if (result.error == null)
         {
             const equipos = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
-                                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
+                                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre", "equipo.estado").
                                     where("salonUbicado", data.salon).limit(data.limit).offset(data.page);
             
             const cantidadEquipos = await knex("equipo").count("* AS total").where("salonUbicado", data.salon);

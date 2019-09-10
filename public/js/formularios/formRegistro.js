@@ -1,3 +1,4 @@
+
 // Cuando la pagina carga: 
 $(document).ready(function()
 {
@@ -10,9 +11,10 @@ $(document).ready(function()
     mostrarResponsables();
     viewCantidadEquipos();
 
-    setInterval(function(){
-        $("#divRegistro").removeClass("active");
-    }, 2000);
+    viewWaitMe("#container");
+    setInterval(() => {
+        stopWaitMe("#container");
+    }, 3000 );
 });
 // Peticion AJAX que trae los nombres de los responsables: 
 function mostrarResponsables()
