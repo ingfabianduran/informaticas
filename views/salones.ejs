@@ -2,102 +2,97 @@
     <head>
         <%- include("head.ejs") %>
     </head>
-    <body>
+    <body id="container">
         <%- include("nav.ejs") %>
         <%- include("modales/modalPresCost.ejs") %>
         <%- include("modales/modalNuevoUsuario.ejs") %>
         <%- include("modales/modalNuevoSalon.ejs") %>
         <%- include("modales/modalReportClases.ejs") %>
-        <div class="dimmable">
-                <div id="divSalones" class="ui active dimmer">
-                    <div class="ui large text loader">Loading</div>
-                </div>
-            <div class="container-fluid mt-5 animated bounceIn" style="height: 100%">
-                <div class="row justify-content-center">
-                    <div class="col-md-7 col-lg-7 col-xl-7 mt-5">
-                        <div class="card">
-                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3"><%= data.date %></h2>
-                            <div class="card-body">
-                                <div class="ui segment">
-                                    <span class="table-add float-right mr-3">
-                                        <span data-toggle="modal" data-target="#modalReportClases"><button class="btn btn-elegant lighten-1 text-white" data-toggle="tooltip" data-placement="left" title="Listado de clases"><i class="fas fa-calendar-alt"></i></button></span>
-                                        <span data-toggle="modal" data-target="#modalPresCost"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="right" title="Pres y Costo"><i class="fas fa-file-excel"></i></button></span>
-                                    </span>
-                                    <canvas id="graficaSalones" width="550" height="170"></canvas>
-                                </div>
+        <div class="container-fluid mt-5 mb-5 animated fadeIn">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-7 col-xl-7 mt-5">
+                    <div class="card">
+                        <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3"><%= data.date %></h2>
+                        <div class="card-body">
+                            <div class="ui segment">
+                                <span class="table-add float-right mr-3">
+                                    <span data-toggle="modal" data-target="#modalReportClases"><button class="btn btn-elegant lighten-1 text-white" data-toggle="tooltip" data-placement="left" title="Listado de clases"><i class="fas fa-calendar-alt"></i></button></span>
+                                    <span data-toggle="modal" data-target="#modalPresCost"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="right" title="Pres y Costo"><i class="fas fa-file-excel"></i></button></span>
+                                </span>
+                                <canvas id="graficaSalones" width="550" height="170"></canvas>
                             </div>
                         </div>
-                        <% if (data.message.length > 0) { %>
-                            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
-                                <strong><%= data.message %></strong>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        <% } %>
+                    </div>
+                    <% if (data.message.length > 0) { %>
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            <strong><%= data.message %></strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-5 col-lg-5 col-xl-5">
+                    <div class="card table-salones">
+                        <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de salones</h2>
+                        <div class="card-body my-custom-scrollbar table-wrapper-scroll-y">
+                            <span class="table-add float-right mb-2 mr-1">
+                                <span data-toggle="modal" data-target="#modalNuevoSalon"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="left" title="Agregar salón"><i class="fas fa-plus"></i></button></span>
+                            </span>
+                            <table class="table table-bordered table-striped text-center">
+                                <thead class="text-uppercase orange text-white">
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Cargadores</th>
+                                    <th scope="col">Acción</th>
+                                </thead>
+                                <tbody>
+                                    <% for(let index = 0; index < data.salones.length; index++) { %>
+                                        <tr>
+                                            <td><%= data.salones[index].nombre %></td>
+                                            <% if(data.salones[index].cantidadCargadores == 0) { %>
+                                                <td>No Aplica</td>
+                                            <% } else { %>
+                                                <td><%= data.salones[index].cantidadCargadores %></td>
+                                            <% } %>
+                                            <td>
+                                                <span data-toggle="modal" data-target="#modalNuevoSalon"><button class="btn btn-elegant btn-sm" data-id='<%= data.salones[index].codigo %>' data-toggle="tooltip" data-placement="left" title="Mas información"><i class="fas fa-info"></i></button></span>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-4">
-                    <div class="col-md-5 col-lg-5 col-xl-5">
-                        <div class="card table-salones">
-                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de salones</h2>
-                            <div class="card-body my-custom-scrollbar table-wrapper-scroll-y">
-                                <span class="table-add float-right mb-2 mr-1">
-                                    <span data-toggle="modal" data-target="#modalNuevoSalon"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="left" title="Agregar salón"><i class="fas fa-plus"></i></button></span>
-                                </span>
-                                <table class="table table-bordered table-striped text-center">
-                                    <thead class="text-uppercase orange text-white">
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Cargadores</th>
-                                        <th scope="col">Acción</th>
-                                    </thead>
-                                    <tbody>
-                                        <% for(let index = 0; index < data.salones.length; index++) { %>
-                                            <tr>
-                                                <td><%= data.salones[index].nombre %></td>
-                                                <% if(data.salones[index].cantidadCargadores == 0) { %>
-                                                    <td>No Aplica</td>
-                                                <% } else { %>
-                                                    <td><%= data.salones[index].cantidadCargadores %></td>
-                                                <% } %>
+                <div class="col-md-5 col-lg-5 col-xl-5">
+                    <div class="card table-usuarios">
+                        <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de usuarios</h2>
+                        <div class="card-body my-custom-scrollbar table-wrapper-scroll-y">
+                            <span class="table-add float-right mb-2 mr-1">
+                                <span data-toggle="modal" data-target="#modalNuevoUsuario"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="left" title="Agregar usuario"><i class="fas fa-plus"></i></button></span>
+                            </span>
+                            <table class="table table-bordered table-striped text-center">
+                                <thead class="text-uppercase orange text-white">
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Privilegios</th>
+                                    <th scope="col">Acción</th>
+                                </thead>
+                                <tbody>
+                                    <% for(let index = 0; index < data.usuarios.length; index++) { %>
+                                        <tr>
+                                            <% if(data.usuarios[index].nombreCompleto != "null") { %>
+                                                <td><%= data.usuarios[index].nombreCompleto %></td>
+                                                <td class="text-uppercase"><%= data.usuarios[index].privilegio %></td>
                                                 <td>
-                                                    <span data-toggle="modal" data-target="#modalNuevoSalon"><button class="btn btn-elegant btn-sm" data-id='<%= data.salones[index].codigo %>' data-toggle="tooltip" data-placement="left" title="Mas información"><i class="fas fa-info"></i></button></span>
+                                                    <span data-toggle="modal" data-target="#modalNuevoUsuario"><button class="btn btn-elegant btn-sm" data-id='<%= data.usuarios[index].codigo %>' data-toggle="tooltip" data-placement="left" title="Mas información"><i class="fas fa-info"></i></button></span>
                                                 </td>
-                                            </tr>
-                                        <% } %>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-lg-5 col-xl-5">
-                        <div class="card table-usuarios">
-                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de usuarios</h2>
-                            <div class="card-body my-custom-scrollbar table-wrapper-scroll-y">
-                                <span class="table-add float-right mb-2 mr-1">
-                                    <span data-toggle="modal" data-target="#modalNuevoUsuario"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="left" title="Agregar usuario"><i class="fas fa-plus"></i></button></span>
-                                </span>
-                                <table class="table table-bordered table-striped text-center">
-                                    <thead class="text-uppercase orange text-white">
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Privilegios</th>
-                                        <th scope="col">Acción</th>
-                                    </thead>
-                                    <tbody>
-                                        <% for(let index = 0; index < data.usuarios.length; index++) { %>
-                                            <tr>
-                                                <% if(data.usuarios[index].nombreCompleto != "null") { %>
-                                                    <td><%= data.usuarios[index].nombreCompleto %></td>
-                                                    <td class="text-uppercase"><%= data.usuarios[index].privilegio %></td>
-                                                    <td>
-                                                        <span data-toggle="modal" data-target="#modalNuevoUsuario"><button class="btn btn-elegant btn-sm" data-id='<%= data.usuarios[index].codigo %>' data-toggle="tooltip" data-placement="left" title="Mas información"><i class="fas fa-info"></i></button></span>
-                                                    </td>
-                                                <% } %>
-                                            </tr>
-                                        <% } %>
-                                    </tbody>
-                                </table>
-                            </div>
+                                            <% } %>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

@@ -2,54 +2,49 @@
     <head>
         <%- include("head.ejs") %>
     </head>
-    <body>
+    <body id="container">
         <%- include("nav.ejs") %>
         <%- include("modales/modalBuscarClase") %>
         <%- include("modales/modalModificarClase") %>
-        <div class="dimmable" style="height: auto">
-            <div id="divClases" class="ui active dimmer">
-                <div class="ui large text loader">Loading</div>
-            </div>
-            <div class="container-fluid animated bounceIn" style="height: 100%">
-                <div class="row justify-content-center mt-4">
-                    <div class="col-lg-9 col-xl-9 mt-4">
-                        <div class="card mt-5">
-                            <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de Clases</h2>
-                            <div class="card-body">
-                                <% if (data.message.length > 0) { %>
-                                    <span class="table-add float-left">
-                                        <div class="alert alert-danger" role="alert">
-                                            <p class="font-weight-bold"><% data.message %></p>
-                                        </div>
-                                    </span>
-                                <% } %>
-                                <span class="table-add float-right mb-3">
-                                    <a class="btn orange text-white" href="/viewClass/0" data-toggle="tooltip" data-placement="left" title="Actualizar lista"><i class="fas fa-sync"></i></a>
-                                    <span data-toggle="modal" data-target="#modalBuscar"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="right" title="Buscar clase"><i class="fas fa-search mr-1"></i></button></span>
+        <div class="container-fluid animated fadeIn">
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-9 col-xl-9 mt-4">
+                    <div class="card mt-5">
+                        <h2 class="card-header text-center font-weight-bold text-uppercase py-4 grey lighten-3">Listado de Clases</h2>
+                        <div class="card-body">
+                            <% if (data.message.length > 0) { %>
+                                <span class="table-add float-left">
+                                    <div class="alert alert-danger" role="alert">
+                                        <p class="font-weight-bold"><% data.message %></p>
+                                    </div>
                                 </span>
-                                <table id="tableClass" class="table table-bordered table-responsive-md table-striped text-center">
-                                    <thead class="text-uppercase elegant-color-dark text-white">
-                                        <tr>
-                                            <th class="text-center">Fecha</th>
-                                            <th class="text-center">Hora Final</th>
-                                            <th class="text-center">Salón</th>
-                                            <th class="text-center">Responsable</th>
-                                            <th class="text-center">Gestión</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                                <% if (data.numPage > 1) { %>
-                                    <nav aria-label="Page navigation example">
-                                        <ul id="pagination" class="pagination pagination-circle pg-dark justify-content-center">
-                                            <% var contador = 0; for( let index = 0; index < data.numPage; index++ ) { %>
-                                                <li class="page-item"><button class="page-link" onclick="mostrarClases('<%= contador %>', this)"><%= index + 1 %></button></li>                                             
-                                            <% contador += 5; } %>
-                                        </ul>
-                                    </nav>
-                                <% } %>
-                            </div>
+                            <% } %>
+                            <span class="table-add float-right mb-3">
+                                <a class="btn orange text-white" href="/viewClass/0" data-toggle="tooltip" data-placement="left" title="Actualizar lista"><i class="fas fa-sync"></i></a>
+                                <span data-toggle="modal" data-target="#modalBuscar"><button class="btn light-green lighten-1 text-white" data-toggle="tooltip" data-placement="right" title="Buscar clase"><i class="fas fa-search mr-1"></i></button></span>
+                            </span>
+                            <table id="tableClass" class="table table-bordered table-responsive-md table-striped text-center">
+                                <thead class="text-uppercase elegant-color-dark text-white">
+                                    <tr>
+                                        <th class="text-center">Fecha</th>
+                                        <th class="text-center">Hora Final</th>
+                                        <th class="text-center">Salón</th>
+                                        <th class="text-center">Responsable</th>
+                                        <th class="text-center">Gestión</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <% if (data.numPage > 1) { %>
+                                <nav aria-label="Page navigation example">
+                                    <ul id="pagination" class="pagination pagination-circle pg-dark justify-content-center">
+                                        <% var contador = 0; for( let index = 0; index < data.numPage; index++ ) { %>
+                                            <li class="page-item"><button class="page-link" onclick="mostrarClases('<%= contador %>', this)"><%= index + 1 %></button></li>                                             
+                                        <% contador += 5; } %>
+                                    </ul>
+                                </nav>
+                            <% } %>
                         </div>
                     </div>
                 </div>

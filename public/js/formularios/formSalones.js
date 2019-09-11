@@ -1,6 +1,8 @@
 // Init page:
 $(document).ready(function () 
 {   
+    viewWaitMe("#container");
+
     $(".ui.dropdown").dropdown();
     $('[data-toggle="tooltip"]').tooltip();
     
@@ -117,7 +119,7 @@ function ajaxGraph()
         complete: function()
         {
             setInterval(function(){
-                $("#divSalones").removeClass("active");
+                stopWaitMe("#container");
             }, 2000);
         }
     });

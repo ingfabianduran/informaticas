@@ -34,8 +34,7 @@ function listarEquipos(page, element, isPagination, salon)
         url: "/listEquipos/" + page + "/" + salon,
         beforeSend: function()
         {
-            $("#divEquipos").addClass("active");
-            $("#formBuscarEquipos").addClass("loading");
+            viewWaitMe("#container");
         },
         success: function (response) 
         {
@@ -67,8 +66,7 @@ function listarEquipos(page, element, isPagination, salon)
         complete: function()
         {
             setInterval(function(){
-                $("#divEquipos").removeClass("active");
-                $("#formBuscarEquipos").removeClass("loading");
+                stopWaitMe("#container");
             }, 2000);
 
             $("input[name='typeCon']").prop('checked', false);
@@ -132,7 +130,7 @@ function rowsTableEquipo(equipo)
 
     if (equipo.estado != "En aula") {
         filaEstadoEquipo = '<tr class="table-warning">';
-        botonEstadoEquipo = '<button class="btn btn-elegant btn-sm" data-id="' + equipo.codigo + '"data-toggle="tooltip" data-placement="right" title="Mas información" onclick="moreInfoEquipo(this)"><i class="fas fa-exclamation"></i></button>';
+        botonEstadoEquipo = '<button class="btn btn-danger btn-sm" data-id="' + equipo.codigo + '"data-toggle="tooltip" data-placement="right" title="Mas información" onclick="moreInfoEquipo(this)"><i class="fas fa-exclamation-circle"></i></button>';
     }
 
     template = filaEstadoEquipo +
@@ -191,11 +189,6 @@ function moreInfoEquipo(element)
                 $("#salon").val(response.data.equipo[0].codSalon).change();
                 $("#nombre").val(response.data.equipo[0].nomEquipo);
                 $("#observaciones").val(response.data.equipo[0].observaciones); 
-
-                if (response.data.equipo[0].estado != "En aula") {
-                    $("#divEstadoEquipo").append('<div class="ui basic red pointing prompt label transition visible">El equipo no esta en el salón!!!</div>');
-                    $("#divEstadoEquipo").addClass("error");
-                }
 
                 validateFormEquipos("updateEquipo", codEquipo);
             }

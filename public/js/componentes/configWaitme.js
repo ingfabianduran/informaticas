@@ -1,3 +1,4 @@
+// View wait me for views: 
 function viewWaitMe(container)
 {
     $(container).waitMe({
@@ -13,7 +14,7 @@ function viewWaitMe(container)
         onClose : function() {}
     });
 }
-
+// Close wait me for views: 
 function stopWaitMe(container)
 {
     $(container).waitMe("hide");

@@ -16,7 +16,7 @@ function mostrarClases(page, element)
         url: "/clases/" + page,
         beforeSend: function() 
         {
-            $("#divClases").addClass("active");
+            viewWaitMe("#container");
         },
         success: function(response) {
             
@@ -40,7 +40,7 @@ function mostrarClases(page, element)
         }, 
         complete: function() {
             setInterval(function() {
-                $("#divClases").removeClass("active");
+                stopWaitMe("#container");
             }, 2000);
         }
     });
