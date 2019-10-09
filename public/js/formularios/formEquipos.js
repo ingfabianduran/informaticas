@@ -101,7 +101,7 @@ function listarEquipo(codEquipo)
                 }
                 else
                 {
-                    $("#tabEquipos").append('<tr><td colspan="4">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
+                    $("#tabEquipos").append('<tr><td colspan="5">Consulta sin resultados. Para volver a consultar haga click <a class="font-weight-bold" href="">Aquí</a></td></tr>');
                 }
             }
             else 
