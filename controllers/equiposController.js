@@ -67,7 +67,7 @@ module.exports = {
         if (result.error == null)
         {
             const equipo = await knex("equipo").join("salon", "equipo.salonUbicado", "salon.codigo").
-                                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre").
+                                    select("equipo.codigo", "equipo.inventario", "equipo.marca", "equipo.tipo", "salon.nombre", "equipo.estado").
                                     where("inventario", data.codEquipo).
                                     orWhere("serie", data.codEquipo);
             
