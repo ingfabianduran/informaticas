@@ -1,6 +1,5 @@
 body {
-  font-family: 'Gudea', sans-serif;
-  background-color: #eeeeee;
+  background-color: #e0e0e0;
 }
 .my-custom-scrollbar {
   position: relative;
@@ -9,4 +8,7 @@ body {
 }
 .table-wrapper-scroll-y {
   display: block;
+}
+body, h2, h3, h4, button, p {
+  font-family: 'Dosis', sans-serif;
 }

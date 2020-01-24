@@ -5,7 +5,7 @@
     <body class="light-green lighten-1">
         <script src="js/formularios/formSesion.js"></script>
         <script src="/js/componentes/ajaxError.js"></script>
-        <div class="container-fluid mt-5 animated fadeInUp">
+        <div class="container-fluid mt-5 animated fadeIn">
             <div class="row justify-content-center h-100">
                 <div class="col-md-4 col-lg-4 col-xl-4 mt-5 my-auto alert-dismissible fade show">
                     <% if (message.length > 0) { %>
@@ -17,11 +17,11 @@
                         </div>
                     <% } %>
                     <div class="card z-depth-4 rounded">
-                        <div class="orange">
-                            <h2 class="card-header white-text font-weight-bold text-uppercase text-center py-4">sign in</h2>
-                        </div>
-                        <div class="card-body m-3">
-                            <form class="ui form large" autocomplete="off" id="formSesion">
+                        <img class="card-img-top" src="https://imagenes.universia.net/gc/net/images/educacion/a/ac/acr/acreditacion-institucional-de-alta-calidad-para-la-universidad-el-bosque.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h2 class="card-title text-center font-weight-bolder">Universidad El Bosque</h2>
+                            <h3 class="card-title text-center font-weight-lighter">Aulas Informáticas</h3>
+                            <form class="ui form large m-1" autocomplete="off" id="formSesion">
                                 <div class="field required">
                                     <label>Usuario:</label>
                                     <input type="text" name="usuario" id="usuario" placeholder="Nombre de usuario">
@@ -31,15 +31,18 @@
                                     <input type="password" name="password" id="password" placeholder="Contraseña de usuario">
                                 </div>
                                 <div class="col-md-12 col-lg-12 col-xl-12 text-center mt-4">
-                                    <button type="submit" class="btn btn-outline-orange btn-block waves-effect">INGRESAR</button>
-                                    <button type="reset" class="btn btn-outline-elegant btn-block waves-effect mt-4">CANCELAR</button>
+                                    <button type="submit" class="btn orange lighten-1 text-white btn-block waves-effect">INGRESAR</button>
+                                    <button type="reset" class="btn elegant-color-dark text-white btn-block waves-effect mt-4">CANCELAR</button>
                                 </div>
                             </form>
+                            
+                        </div>
+                        <div class="card-footer text-white footer-copyright text-center py-3 elegant-color-dark">
+                            © 2020 Copyright: Support with: ingfabianavellaneda@gmail.com
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <%- include("footer.ejs") %>
     </body>
 </html>

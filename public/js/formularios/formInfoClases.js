@@ -100,9 +100,9 @@ function renderTable(clase, usuario)
                         '<td>' + clase.nombre + '</td>' +
                         '<td>' + clase.responsable + '</td>' +
                         '<td>' + 
-                            '<button class="btn btn-elegant" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="left" title="Mas información" onclick="masInformacion(this)"><i class="fas fa-info"></i></button>' +
-                            '<span data-toggle="modal" data-target="#modalModificarClase"><button class="btn orange text-white m-1" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="bottom" title="Modificar clase" onclick="editarInformacionClase(this)"><i class="fas fa-pen"></i></button></span>' +
-                            '<button class="btn btn-danger" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="right" title="Entregar salón" onclick="finalizarClase(this)"><i class="fas fa-thumbs-up"></i></button>' +
+                            '<button class="btn elegant-color-dark text-white" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="left" title="Mas información" onclick="masInformacion(this)"><i class="fas fa-info"></i></button>' +
+                            '<span data-toggle="modal" data-target="#modalModificarClase"><button class="btn orange lighten-1 text-white m-1" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="bottom" title="Modificar clase" onclick="editarInformacionClase(this)"><i class="fas fa-pen"></i></button></span>' +
+                            '<button class="btn green darken-4 text-white" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="right" title="Entregar salón" onclick="finalizarClase(this)"><i class="fas fa-thumbs-up"></i></button>' +
                         '</td>' +
                     '</tr>';
     }
@@ -114,8 +114,8 @@ function renderTable(clase, usuario)
                         '<td>' + clase.nombre + '</td>' +
                         '<td>' + clase.responsable + '</td>' +
                         '<td>' + 
-                            '<button class="btn btn-elegant" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="left" title="Mas información" onclick="masInformacion(this)"><i class="fas fa-info"></i></button>' +
-                            '<button class="btn btn-danger" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="right" title="Entregar salón" onclick="finalizarClase(this)"><i class="fas fa-thumbs-up"></i></button>' +
+                            '<button class="btn orange lighten-1" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="left" title="Mas información" onclick="masInformacion(this)"><i class="fas fa-info"></i></button>' +
+                            '<button class="btn green darken-4" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="right" title="Entregar salón" onclick="finalizarClase(this)"><i class="fas fa-thumbs-up"></i></button>' +
                         '</td>' +
                     '</tr>';
     }
@@ -144,9 +144,9 @@ function masInformacion(element)
                     showCancelButton: true,
                     focusConfirm: false,
                     confirmButtonText: template.textBtConfirm,
-                    confirmButtonColor: '#ff4444',
+                    confirmButtonColor: '#ffa726',
                     cancelButtonText: template.textBtCancel,
-                    cancelButtonColor: '#2E2E2E', 
+                    cancelButtonColor: '#212121', 
                     animation: false,
                     customClass: {
                         popup: 'animated tada'
@@ -248,9 +248,9 @@ function finalizarClase(element)
         showCancelButton: true,
         focusConfirm: false,
         confirmButtonText: template.textBtConfirm,
-        confirmButtonColor: '#ff4444',
+        confirmButtonColor: '#ffa726',
         cancelButtonText: template.textBtCancel,
-        cancelButtonColor: '#2E2E2E',
+        cancelButtonColor: '#212121',
         animation: false,
         customClass: {
             popup: 'animated tada'

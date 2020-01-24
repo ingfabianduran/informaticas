@@ -126,7 +126,7 @@ function rowsTableEquipo(equipo)
 {
     var template = '';
     var filaEstadoEquipo = '<tr>';
-    var botonEstadoEquipo = '<button class="btn btn-elegant btn-sm" data-id="' + equipo.codigo + '"data-toggle="tooltip" data-placement="right" title="Mas información" onclick="moreInfoEquipo(this)"><i class="fas fa-info"></i></button>';
+    var botonEstadoEquipo = '<button class="btn elegant-color-dark btn-sm" data-id="' + equipo.codigo + '"data-toggle="tooltip" data-placement="right" title="Mas información" onclick="moreInfoEquipo(this)"><i class="fas fa-info"></i></button>';
 
     if (equipo.estado != "En aula") {
         filaEstadoEquipo = '<tr class="table-warning">';

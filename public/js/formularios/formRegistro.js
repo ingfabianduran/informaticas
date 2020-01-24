@@ -177,7 +177,7 @@ function viewAlertSuccess(templated)
         showCancelButton: false,
         focusConfirm: false,
         confirmButtonText: '<i class="fa fa-thumbs-up"></i> Entendido!!!',
-        confirmButtonColor: '#ff4444',
+        confirmButtonColor: '#ffa726',
         confirmButtonAriaLabel: 'Thumbs up, great!',
         animation: false,
         customClass: {
