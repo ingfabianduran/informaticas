@@ -114,8 +114,8 @@ function renderTable(clase, usuario)
                         '<td>' + clase.nombre + '</td>' +
                         '<td>' + clase.responsable + '</td>' +
                         '<td>' + 
-                            '<button class="btn orange lighten-1" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="left" title="Mas información" onclick="masInformacion(this)"><i class="fas fa-info"></i></button>' +
-                            '<button class="btn green darken-4" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="right" title="Entregar salón" onclick="finalizarClase(this)"><i class="fas fa-thumbs-up"></i></button>' +
+                            '<button class="btn orange lighten-1 text-white" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="left" title="Mas información" onclick="masInformacion(this)"><i class="fas fa-info"></i></button>' +
+                            '<button class="btn green darken-4 text-white" data-id="' + clase.codigo + '" data-toggle="tooltip" data-placement="right" title="Entregar salón" onclick="finalizarClase(this)"><i class="fas fa-thumbs-up"></i></button>' +
                         '</td>' +
                     '</tr>';
     }
