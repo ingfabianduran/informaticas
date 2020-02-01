@@ -1,4 +1,4 @@
-# informaticas
+# Informaticas Universidad El Bosque
 
 Sistematización del área de aulas informáticas, a través de una plataforma la cual permitía: 
 
